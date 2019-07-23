@@ -22,9 +22,12 @@ module.exports = gql `
     }
     type Query {
         getFoods: [Food]
+        getFood(foodId: ID!): Food
     }
     type Mutation {
         register(registerInput: RegisterInput): User!
         login(username: String!, password:String!): User!
+        createFood(body: String!): Food!
+        deleteFood(foodId: ID!): String!
     }
 `
