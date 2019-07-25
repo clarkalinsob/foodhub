@@ -37,10 +37,10 @@ module.exports = {
             }
 
             const newFood = new Food({
+                createdAt: new Date().toISOString(),
                 body,
-                user: user.id,
                 username: user.username,
-                createdAt: new Date().toISOString()
+                _user: user.id
             });
 
             const food = await newFood.save();

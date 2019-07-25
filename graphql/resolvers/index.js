@@ -1,3 +1,4 @@
+const menuResolvers = require("./menus");
 const foodsResolvers = require("./foods");
 const usersResolvers = require("./users");
 const commentsResolvers = require("./comments");
@@ -8,11 +9,13 @@ module.exports = {
         commentCount: parent => parent.comments.length
     },
     Query: {
-        ...foodsResolvers.Query
         // ...usersResolvers.Query
+        ...menuResolvers.Query,
+        ...foodsResolvers.Query
     },
     Mutation: {
         ...usersResolvers.Mutation,
+        ...menuResolvers.Mutation,
         ...foodsResolvers.Mutation,
         ...commentsResolvers.Mutation
     }

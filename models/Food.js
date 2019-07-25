@@ -1,9 +1,9 @@
 const { model, Schema } = require("mongoose");
 
 const foodSchema = new Schema({
+    createdAt: String,
     body: String,
     username: String,
-    createdAt: String,
     comments: [
         {
             body: String,
@@ -17,7 +17,7 @@ const foodSchema = new Schema({
             createdAt: String
         }
     ],
-    user: {
+    _user: {
         type: Schema.Types.ObjectId,
         ref: "users"
     }
