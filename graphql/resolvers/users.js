@@ -4,8 +4,7 @@ const { UserInputError } = require("apollo-server");
 
 const {
     validateSignupInput,
-    validateLoginInput
-    // validateSignupGoogle,
+    validateSigninInput
 } = require("../../util/validators");
 const { SECRET_KEY } = require("../../config");
 const User = require("../../models/User");
@@ -41,7 +40,7 @@ function generatePassword(length) {
 module.exports = {
     Mutation: {
         signin: async (_, { email, password }) => {
-            const { errors, valid } = validateLoginInput(email, password);
+            const { errors, valid } = validateSigninInput(email, password);
 
             if (!valid) {
                 throw new UserInputError("Errors", {
@@ -56,6 +55,13 @@ module.exports = {
             if (!user) {
                 errors.general = "User not found";
                 throw new UserInputError("User not found", {
+                    errors
+                });
+            }
+
+            if (!user.password) {
+                errors.general = "Try signing in with Google";
+                throw new UserInputError("Try signing in with Google", {
                     errors
                 });
             }
@@ -111,7 +117,7 @@ module.exports = {
             if (user) {
                 throw new UserInputError("Email is taken", {
                     errors: {
-                        google: "This email is taken"
+                        email: "This email is taken"
                     }
                 });
             }

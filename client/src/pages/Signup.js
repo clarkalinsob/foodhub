@@ -4,10 +4,13 @@ import { Button, Form, Icon } from "semantic-ui-react";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
+import { useForm } from "../util/hooks";
+
 function Signup(props) {
     // START Sign up Manually
     const [errors, setErrors] = useState({});
-    const [values, setValues] = useState({
+
+    const { onChange, onSubmit, values } = useForm(signupUserCallback, {
         givenName: "",
         familyName: "",
         email: "",
@@ -15,11 +18,7 @@ function Signup(props) {
         confirmPassword: ""
     });
 
-    const onChange = event => {
-        setValues({ ...values, [event.target.name]: event.target.value });
-    };
-
-    const [addUser, { loading }] = useMutation(REGISTER_USER, {
+    const [signupUser, { loading }] = useMutation(SIGNUP_USER, {
         update(_, result) {
             props.history.push("/");
         },
@@ -29,10 +28,10 @@ function Signup(props) {
         variables: values
     });
 
-    const onSubmit = event => {
-        event.preventDefault();
-        addUser();
-    };
+    function signupUserCallback() {
+        signupUser();
+    }
+
     // END Sign up Manually
 
     // START Sign up with Google
@@ -40,7 +39,7 @@ function Signup(props) {
         token: ""
     });
 
-    const [signupGoogle] = useMutation(SIGN_UP_GOOGLE, {
+    const [signupGoogle] = useMutation(SIGNUP_GOOGLE, {
         update(_, result) {
             props.history.push("/");
         },
@@ -161,7 +160,7 @@ function Signup(props) {
     );
 }
 
-const REGISTER_USER = gql`
+const SIGNUP_USER = gql`
     mutation signup(
         $givenName: String!
         $familyName: String!
@@ -170,8 +169,8 @@ const REGISTER_USER = gql`
         $confirmPassword: String!
     ) {
         signup(
-            registerInput: {
-                givenName: $displayName
+            signupInput: {
+                givenName: $givenName
                 familyName: $familyName
                 email: $email
                 password: $password
@@ -187,7 +186,7 @@ const REGISTER_USER = gql`
     }
 `;
 
-const SIGN_UP_GOOGLE = gql`
+const SIGNUP_GOOGLE = gql`
     mutation signupGoogle($token: String!) {
         signupGoogle(token: $token) {
             id

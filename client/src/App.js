@@ -11,8 +11,11 @@ import Foods from "./pages/Foods";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 
+// import { AuthProvider } from "./context/auth";
+
 function App() {
     return (
+        // <AuthProvider>
         <Router>
             <Container>
                 <MenuBar />
@@ -22,6 +25,7 @@ function App() {
                 <Route exact path="/signup" component={Signup} />
             </Container>
         </Router>
+        // </AuthProvider>
     );
 }
 

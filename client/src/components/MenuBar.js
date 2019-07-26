@@ -39,7 +39,7 @@ function MenuBar() {
                     as={Link}
                     to="/signin"
                 >
-                    Login
+                    Sign In
                 </Menu.Item>
 
                 <Menu.Item
@@ -49,7 +49,7 @@ function MenuBar() {
                     as={Link}
                     to="/signup"
                 >
-                    Register
+                    Sign Up
                 </Menu.Item>
             </Menu.Menu>
         </Menu>

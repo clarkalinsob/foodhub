@@ -75,7 +75,7 @@ module.exports = gql`
         signupGoogle(token: String!): User!
 
         signin(email: String!, password: String!): User!
-        loginGoogle(token: String!): User!
+        signinGoogle(token: String!): User!
 
         createMenu(body: String!): Menu!
         deleteMenu(menuId: ID!): String!
