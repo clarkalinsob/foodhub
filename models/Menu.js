@@ -3,7 +3,7 @@ const { model, Schema } = require("mongoose");
 const menuSchema = new Schema({
     createdAt: String,
     body: String,
-    username: String,
+    displayName: String,
     meals: [
         {
             createdAt: String,
@@ -13,7 +13,7 @@ const menuSchema = new Schema({
                 type: Schema.Types.ObjectId,
                 ref: "foods"
             },
-            username: String,
+            displayName: String,
             _user: {
                 type: Schema.Types.ObjectId,
                 ref: "users"
@@ -23,14 +23,14 @@ const menuSchema = new Schema({
     likes: [
         {
             createdAt: String,
-            username: String
+            displayName: String
         }
     ],
     comments: [
         {
             createdAt: String,
             body: String,
-            username: String
+            displayName: String
         }
     ],
     _user: {

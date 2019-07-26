@@ -2,7 +2,7 @@ const { model, Schema } = require("mongoose");
 
 const orderSchema = new Schema({
     createdAt: String,
-    username: String,
+    displayName: String,
     meals: [
         {
             createdAt: String,

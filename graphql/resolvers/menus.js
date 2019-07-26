@@ -32,7 +32,7 @@ module.exports = {
 
     Mutation: {
         createMenu: async (_, { body }, context) => {
-            const { id, username } = checkAuth(context);
+            const { id, displayName } = checkAuth(context);
 
             if (body.trim() === "")
                 throw new Error("Menu body must not be empty");
@@ -40,7 +40,7 @@ module.exports = {
             const newMenu = new Menu({
                 createdAt: new Date().toISOString(),
                 body,
-                username,
+                displayName,
                 _user: id
             });
 
@@ -50,12 +50,12 @@ module.exports = {
         },
 
         deleteMenu: async (_, { menuId }, context) => {
-            const { username } = checkAuth(context);
+            const { displayName } = checkAuth(context);
 
             try {
                 const menu = await Menu.findById(menuId);
 
-                if (username == menu.username) {
+                if (displayName == menu.displayName) {
                     await menu.delete();
                     return "Menu deleted successfully";
                 } else throw new AuthenticationError("Action not allowed");
@@ -69,7 +69,7 @@ module.exports = {
             { menuId, meal: { date, foodName, _food } },
             context
         ) => {
-            const { id, username } = checkAuth(context);
+            const { id, displayName } = checkAuth(context);
 
             if (foodName.trim() === "")
                 throw new Error("Food must be provided");
@@ -83,7 +83,7 @@ module.exports = {
                     date,
                     foodName,
                     _food,
-                    username,
+                    displayName,
                     _user: id
                 });
 
@@ -93,7 +93,7 @@ module.exports = {
         },
 
         deleteMeal: async (_, { menuId, mealId }, context) => {
-            const { username } = checkAuth(context);
+            const { displayName } = checkAuth(context);
 
             const menu = await Menu.findById(menuId);
 

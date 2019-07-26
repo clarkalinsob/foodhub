@@ -3,17 +3,17 @@ const { model, Schema } = require("mongoose");
 const foodSchema = new Schema({
     createdAt: String,
     body: String,
-    username: String,
+    displayName: String,
     comments: [
         {
             body: String,
-            username: String,
+            displayName: String,
             createdAt: String
         }
     ],
     likes: [
         {
-            username: String,
+            displayName: String,
             createdAt: String
         }
     ],

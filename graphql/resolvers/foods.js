@@ -39,7 +39,7 @@ module.exports = {
             const newFood = new Food({
                 createdAt: new Date().toISOString(),
                 body,
-                username: user.username,
+                displayName: user.displayName,
                 _user: user.id
             });
 
@@ -54,7 +54,7 @@ module.exports = {
             try {
                 const food = await Food.findById(foodId);
 
-                if (user.username == food.username) {
+                if (user.displayName == food.displayName) {
                     await food.delete();
                     return "Food deleted successfully";
                 } else {

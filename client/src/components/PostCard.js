@@ -4,7 +4,7 @@ import { Button, Card, Icon, Image, Label } from "semantic-ui-react";
 import moment from "moment";
 
 function PostCard({
-    food: { body, createdAt, id, username, likeCount, commentCount, likes }
+    food: { body, createdAt, id, displayName, likeCount, commentCount, likes }
 }) {
     function likeFood() {
         console.log("likeFood!");
@@ -23,7 +23,7 @@ function PostCard({
                 <Card.Header>{body}</Card.Header>
                 <Card.Meta as={Link} to={`/foods/${id}`}>
                     <Icon name="user outline" style={{ marginRight: 5 }} />
-                    {username}
+                    {displayName}
                     <br />
                 </Card.Meta>
                 <Card.Meta as={Link} to={`/foods/${id}`}>
@@ -34,18 +34,18 @@ function PostCard({
             </Card.Content>
             <Card.Content extra>
                 <Button as="div" labelPosition="right" onClick={likeFood}>
-                    <Button color="green" basic>
-                        <Icon name="thumbs up" />
+                    <Button color="red" basic>
+                        <Icon name="heart" />
                     </Button>
-                    <Label as="a" basic color="green" pointing="left">
+                    <Label as="a" basic color="red" pointing="left">
                         {likeCount}
                     </Label>
                 </Button>
                 <Button as="div" labelPosition="right" onClick={commentOnFood}>
-                    <Button color="orange" basic>
+                    <Button color="green" basic>
                         <Icon name="comments" />
                     </Button>
-                    <Label as="a" basic color="orange" pointing="left">
+                    <Label as="a" basic color="green" pointing="left">
                         {commentCount}
                     </Label>
                 </Button>

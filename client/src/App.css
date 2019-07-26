@@ -4,3 +4,16 @@
     font-size: 2rem;
     margin-top: 2rem;
 }
+
+.form-container {
+    width: 30rem;
+    margin: 2rem auto auto auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    padding: 0;
+    margin: 0;
+}

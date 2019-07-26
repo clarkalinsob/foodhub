@@ -3,82 +3,92 @@ const gql = require("graphql-tag");
 module.exports = gql`
     type Menu {
         id: ID!
-        createdAt: String!
         body: String!
-        username: String!
+        displayName: String!
         meals: [Meal]!
         likes: [Like]!
         _user: ID!
+        createdAt: String!
     }
     type Food {
         id: ID!
         body: String!
-        username: String!
-        createdAt: String!
-        comments: [Comment]!
+        displayName: String!
         likes: [Like]!
+        comments: [Comment]!
         likeCount: Int!
         commentCount: Int!
         _user: ID!
+        createdAt: String!
     }
     type Meal {
         id: ID!
-        createdAt: String!
         date: String!
         foodName: String!
+        displayName: String!
         _food: ID!
-        username: String!
         _user: ID!
+        createdAt: String!
     }
     type Comment {
         id: ID!
-        createdAt: String!
-        username: String!
+        displayName: String!
         body: String!
+        createdAt: String!
     }
     type Like {
         id: ID!
+        displayName: String!
         createdAt: String
-        username: String!
     }
     type User {
         id: ID!
         email: String!
         token: String!
-        username: String!
+        displayName: String!
         createdAt: String!
     }
-    input RegisterInput {
-        username: String!
+    input SignupInput {
+        givenName: String!
+        familyName: String!
+        email: String!
         password: String!
         confirmPassword: String!
-        email: String!
     }
     input MealInput {
-        createdAt: String!
         date: String!
         foodName: String!
+        displayName: String!
         _food: ID!
-        username: String!
         _user: ID!
+        createdAt: String!
     }
     type Query {
         getMenus: [Menu]
         getMenu(menuId: ID!): Menu
+
         getFoods: [Food]
         getFood(foodId: ID!): Food
     }
     type Mutation {
-        register(registerInput: RegisterInput): User!
-        login(username: String!, password: String!): User!
+        signup(signupInput: SignupInput): User!
+        signupGoogle(token: String!): User!
+
+        signin(email: String!, password: String!): User!
+        loginGoogle(token: String!): User!
+
         createMenu(body: String!): Menu!
         deleteMenu(menuId: ID!): String!
+
         createMeal(menuId: ID!, meal: MealInput): Menu!
         deleteMeal(menuId: ID!, mealId: ID!): Menu!
+
         createFood(body: String!): Food!
         deleteFood(foodId: ID!): String!
+
         createComment(foodId: ID!, body: String!): Food!
         deleteComment(foodId: ID!, commentId: ID!): Food!
+
         likeFood(foodId: ID!): Food!
     }
 `;

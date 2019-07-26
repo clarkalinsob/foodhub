@@ -42,15 +42,15 @@ const FETCH_FOOD_QUERY = gql`
             id
             body
             createdAt
-            username
+            displayName
             likeCount
             commentCount
             likes {
-                username
+                displayName
             }
             comments {
                 id
-                username
+                displayName
                 createdAt
                 body
             }

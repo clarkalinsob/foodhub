@@ -6,7 +6,7 @@ const checkAuth = require("../../util/check-auth");
 module.exports = {
     Mutation: {
         createComment: async (_, { foodId, body }, context) => {
-            const { username } = checkAuth(context);
+            const { displayName } = checkAuth(context);
 
             if (body.trim() === "") {
                 throw new UserInputError("Empty comment", {
@@ -21,7 +21,7 @@ module.exports = {
             if (food) {
                 food.comments.unshift({
                     body,
-                    username,
+                    displayName,
                     createdAt: new Date().toISOString()
                 });
                 await food.save();
@@ -30,7 +30,7 @@ module.exports = {
         },
 
         deleteComment: async (_, { foodId, commentId }, context) => {
-            const { username } = checkAuth(context);
+            const { displayName } = checkAuth(context);
 
             const food = await Food.findById(foodId);
 
@@ -39,7 +39,7 @@ module.exports = {
                     comment => comment.id === commentId
                 );
 
-                if (food.comments[commentIndex].username === username) {
+                if (food.comments[commentIndex].displayName === displayName) {
                     food.comments.splice(commentIndex, 1);
                     await food.save();
                     return food;
@@ -52,18 +52,18 @@ module.exports = {
         },
 
         likeFood: async (_, { foodId }, context) => {
-            const { username } = checkAuth(context);
+            const { displayName } = checkAuth(context);
 
             const food = await Food.findById(foodId);
 
             if (food) {
-                if (food.likes.find(like => like.username === username)) {
+                if (food.likes.find(like => like.displayName === displayName)) {
                     food.likes = food.likes.filter(
-                        like => like.username !== username
+                        like => like.displayName !== displayName
                     );
                 } else {
                     food.likes.push({
-                        username,
+                        displayName,
                         createdAt: new Date().toISOString()
                     });
                 }

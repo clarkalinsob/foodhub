@@ -10,7 +10,7 @@ function MenuBar() {
     const handleItemClick = (e, { name }) => setActiveItem(name);
 
     return (
-        <Menu stackable size="massive" color="green" attached>
+        <Menu pointing secondary size="massive" color="green" attached>
             <Menu.Item
                 name="home"
                 active={activeItem === "home"}
@@ -33,21 +33,21 @@ function MenuBar() {
 
             <Menu.Menu position="right">
                 <Menu.Item
-                    name="login"
-                    active={activeItem === "login"}
+                    name="signin"
+                    active={activeItem === "signin"}
                     onClick={handleItemClick}
                     as={Link}
-                    to="/login"
+                    to="/signin"
                 >
                     Login
                 </Menu.Item>
 
                 <Menu.Item
-                    name="register"
-                    active={activeItem === "register"}
+                    name="signup"
+                    active={activeItem === "signup"}
                     onClick={handleItemClick}
                     as={Link}
-                    to="/register"
+                    to="/signup"
                 >
                     Register
                 </Menu.Item>

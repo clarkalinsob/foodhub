@@ -1,12 +1,16 @@
 module.exports.validateRegisterInput = (
-    username,
+    givenName,
+    familyName,
     email,
     password,
     confirmPassword
 ) => {
     const errors = {};
-    if (username.trim() === "") {
-        errors.username = "Username must not be empty";
+    if (givenName.trim() === "") {
+        errors.givenName = "Given name must not be empty";
+    }
+    if (familyName.trim() === "") {
+        errors.familyName = "Family name must not be empty";
     }
     if (email.trim() === "") {
         errors.email = "Email must not be empty";
@@ -28,10 +32,15 @@ module.exports.validateRegisterInput = (
     };
 };
 
-module.exports.validateLoginInput = (username, password) => {
+module.exports.validateLoginInput = (email, password) => {
     const errors = {};
-    if (username.trim() === "") {
-        errors.username = "Username must not be empty";
+    if (email.trim() === "") {
+        errors.email = "Email must not be empty";
+    } else {
+        const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
+        if (!email.match(regEx)) {
+            errors.email = "Email must be a valid email address";
+        }
     }
     if (password.trim() === "") {
         errors.password = "Password must not be empty";

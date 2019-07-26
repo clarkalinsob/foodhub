@@ -3,8 +3,9 @@ const jwt = require("jsonwebtoken");
 const { UserInputError } = require("apollo-server");
 
 const {
-    validateRegisterInput,
+    validateSignupInput,
     validateLoginInput
+    // validateSignupGoogle,
 } = require("../../util/validators");
 const { SECRET_KEY } = require("../../config");
 const User = require("../../models/User");
@@ -14,7 +15,7 @@ function generateToken(user) {
         {
             id: user.id,
             email: user.email,
-            username: user.username
+            displayName: user.displayName
         },
         SECRET_KEY,
         {
@@ -23,10 +24,24 @@ function generateToken(user) {
     );
 }
 
+function generatePassword(length) {
+    let password = "";
+    let charList =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()-=_+[]{};'|,./<>?`~";
+
+    for (let i = 0; i < length; i++) {
+        password += charList.charAt(
+            Math.floor(Math.random() * charList.length)
+        );
+    }
+
+    return password;
+}
+
 module.exports = {
     Mutation: {
-        async login(_, { username, password }) {
-            const { errors, valid } = validateLoginInput(username, password);
+        signin: async (_, { email, password }) => {
+            const { errors, valid } = validateLoginInput(email, password);
 
             if (!valid) {
                 throw new UserInputError("Errors", {
@@ -35,11 +50,11 @@ module.exports = {
             }
 
             const user = await User.findOne({
-                username
+                email
             });
 
             if (!user) {
-                errors.general = "User no found";
+                errors.general = "User not found";
                 throw new UserInputError("User not found", {
                     errors
                 });
@@ -63,14 +78,21 @@ module.exports = {
             };
         },
 
-        async register(
+        signup: async (
             _,
             {
-                registerInput: { username, email, password, confirmPassword }
+                signupInput: {
+                    givenName,
+                    familyName,
+                    email,
+                    password,
+                    confirmPassword
+                }
             }
-        ) {
-            const { valid, errors } = validateRegisterInput(
-                username,
+        ) => {
+            const { valid, errors } = validateSignupInput(
+                givenName,
+                familyName,
                 email,
                 password,
                 confirmPassword
@@ -83,13 +105,13 @@ module.exports = {
             }
 
             const user = await User.findOne({
-                username
+                email
             });
 
             if (user) {
-                throw new UserInputError("Username is taken", {
+                throw new UserInputError("Email is taken", {
                     errors: {
-                        username: "This username is taken"
+                        google: "This email is taken"
                     }
                 });
             }
@@ -97,20 +119,62 @@ module.exports = {
             password = await bcrypt.hash(password, 12);
 
             const newUser = new User({
+                displayName: `${givenName} ${familyName}`,
+                givenName,
+                familyName,
                 email,
-                username,
                 password,
                 createdAt: new Date().toISOString()
             });
 
             const res = await newUser.save();
-
             const token = generateToken(res);
 
             return {
                 ...res._doc,
                 id: res._id,
                 token
+            };
+        },
+
+        signupGoogle: async (_, { token }) => {
+            const {
+                name,
+                given_name,
+                family_name,
+                email,
+                hd,
+                picture
+            } = jwt.decode(token);
+
+            const user = await User.findOne({
+                email
+            });
+
+            if (user) {
+                throw new UserInputError("Email is taken", {
+                    errors: {
+                        email: "This email is taken"
+                    }
+                });
+            }
+
+            const newUser = new User({
+                displayName: name,
+                givenName: given_name,
+                family_name: family_name,
+                email,
+                createdAt: new Date().toISOString()
+            });
+
+            const res = await newUser.save();
+
+            const newToken = generateToken(res);
+
+            return {
+                ...res._doc,
+                id: res._id,
+                token: newToken
             };
         }
     }
