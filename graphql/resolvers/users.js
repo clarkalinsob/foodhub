@@ -143,6 +143,38 @@ module.exports = {
             };
         },
 
+        signinGoogle: async (_, { token }) => {
+            const {
+                name,
+                given_name,
+                family_name,
+                email,
+                hd,
+                picture
+            } = jwt.decode(token);
+
+            const user = await User.findOne({ email });
+
+            if (!user) {
+                // errors.general = "User not found";
+                throw new Error("User not found");
+            }
+
+            user.displayName = name;
+            user.givenName = given_name;
+            user.familyName = family_name;
+
+            const res = await user.save();
+
+            const newToken = generateToken(res);
+
+            return {
+                ...res._doc,
+                id: res._id,
+                token: newToken
+            };
+        },
+
         signupGoogle: async (_, { token }) => {
             const {
                 name,

@@ -1,21 +1,35 @@
 import React, { createContext, useReducer } from "react";
+import jwtDecode from "jwt-decode";
+
+const initialState = {
+    user: null
+};
+
+if (localStorage.getItem("jwtToken")) {
+    const decodedToken = jwtDecode(localStorage.getItem("jwtToken"));
+
+    if (decodedToken.exp * 1000 < Date.now()) {
+        localStorage.removeItem("jwtToken");
+    } else {
+        initialState.user = decodedToken;
+    }
+}
 
 const AuthContext = createContext({
     user: null,
-    login: userData => {},
-    logout: () => {}
+    signin: userData => {},
+    signout: () => {}
 });
 
 // Reducers
 function authReducer(state, action) {
     switch (action.type) {
-        case "LOGIN":
+        case "SIGNIN":
             return {
                 ...state,
                 user: action.payload
             };
-            break;
-        case "LOGOUT": {
+        case "SIGNOUT": {
             return {
                 ...state,
                 user: null
@@ -28,24 +42,26 @@ function authReducer(state, action) {
 
 // Auth Provider
 function AuthProvider(props) {
-    const [state, dispatch] = useReducer(authReducer, { user: null });
+    const [state, dispatch] = useReducer(authReducer, initialState);
 
-    const login = userData => {
+    const signin = userData => {
+        localStorage.setItem("jwtToken", userData.token);
         dispatch({
-            type: "LOGIN",
+            type: "SIGNIN",
             payload: userData
         });
     };
 
-    const logout = () => {
+    const signout = () => {
+        localStorage.removeItem("jwtToken");
         dispatch({
-            type: "LOGOUT"
+            type: "SIGNOUT"
         });
     };
 
     return (
         <AuthContext.Provider
-            value={{ user: state.user, login, logout }}
+            value={{ user: state.user, signin, signout }}
             {...props}
         />
     );

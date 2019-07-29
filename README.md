@@ -1,2 +1,3 @@
-# foodapp
+# foodhub
+
 MERN Stack, Apollo, GraphQL

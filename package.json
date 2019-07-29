@@ -1,5 +1,5 @@
 {
-    "name": "foodapp",
+    "name": "foodhub",
     "version": "1.0.0",
     "description": "MERN Stack, Apollo, GraphQL",
     "main": "server.js",
@@ -10,14 +10,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/clarkalinsob/foodapp.git"
+        "url": "git+https://github.com/clarkalinsob/foodhub.git"
     },
     "author": "Clark Egbert Alinsob",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/clarkalinsob/foodapp/issues"
+        "url": "https://github.com/clarkalinsob/foodhub/issues"
     },
-    "homepage": "https://github.com/clarkalinsob/foodapp#readme",
+    "homepage": "https://github.com/clarkalinsob/foodhub#readme",
     "dependencies": {
         "apollo-server": "^2.7.0",
         "bcryptjs": "^2.4.3",
