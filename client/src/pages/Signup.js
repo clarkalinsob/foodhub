@@ -6,6 +6,7 @@ import gql from "graphql-tag";
 
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
+const { GOOGLE_CLIENT_ID } = require("../config");
 
 function Signup(props) {
     // START Sign up Manually
@@ -139,7 +140,7 @@ function Signup(props) {
                     </Form>
                     <Divider horizontal>Or</Divider>
                     <GoogleLogin
-                        clientId="11092705321-gccolrcjlovlcfqjr6cm115ltdhqm1c0.apps.googleusercontent.com"
+                        clientId={GOOGLE_CLIENT_ID}
                         render={renderProps => (
                             <Button
                                 fluid
