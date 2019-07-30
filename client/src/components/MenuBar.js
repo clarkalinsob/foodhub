@@ -1,79 +1,56 @@
 import React, { useContext, useState } from "react";
-import { Menu } from "semantic-ui-react";
+import { Button, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import { AuthContext } from "../context/auth";
+import ProfileDropdown from "./ProfileDropdown";
 
 function MenuBar() {
     const { user, signout } = useContext(AuthContext);
-    const pathname = window.location.pathname;
-    const path = pathname === "/" ? "home" : pathname.substr(1);
-    const [activeItem, setActiveItem] = useState(path);
-
-    const handleItemClick = (e, { name }) => setActiveItem(name);
 
     const menuBar = user ? (
-        <Menu pointing secondary size="massive" color="green" attached>
-            <Menu.Item
-                name={user.displayName}
-                active
-                onClick={handleItemClick}
-                as={Link}
-                to="/"
-            >
-                {user.displayName}
+        <Menu
+            size="massive"
+            color="orange"
+            inverted
+            borderless
+            style={{ borderRadius: 0, marginBottom: "4rem" }}
+        >
+            <Menu.Item name="home" as={Link} to="/">
+                LOGO
             </Menu.Item>
             <Menu.Menu position="right">
-                <Menu.Item
-                    name="foods"
-                    active={activeItem === "foods"}
-                    onClick={handleItemClick}
-                    as={Link}
-                    to="/foods"
-                >
-                    Foods
-                </Menu.Item>
-                <Menu.Item
-                    name="signout"
-                    onClick={signout}
-                    as={Link}
-                    to="/signin"
-                >
-                    Sign out
+                <Menu.Item>
+                    <ProfileDropdown signout={signout} user={user} />
                 </Menu.Item>
             </Menu.Menu>
         </Menu>
     ) : (
-        <Menu pointing secondary size="massive" color="green" attached>
-            <Menu.Item
-                name="home"
-                active={activeItem === "home"}
-                onClick={handleItemClick}
-                as={Link}
-                to="/"
-            >
-                Home
+        <Menu
+            size="massive"
+            color="blue"
+            inverted
+            borderless
+            style={{ borderRadius: 0, marginBottom: "4rem" }}
+        >
+            <Menu.Item name="home" as={Link} to="/">
+                LOGO
             </Menu.Item>
 
             <Menu.Menu position="right">
-                <Menu.Item
-                    name="signin"
-                    active={activeItem === "signin"}
-                    onClick={handleItemClick}
-                    as={Link}
-                    to="/signin"
-                >
-                    Sign In
-                </Menu.Item>
-
-                <Menu.Item
-                    name="signup"
-                    active={activeItem === "signup"}
-                    onClick={handleItemClick}
-                    as={Link}
-                    to="/signup"
-                >
-                    Sign Up
+                <Menu.Item>
+                    <Button
+                        name="signin"
+                        color="blue"
+                        as={Link}
+                        to="/signin"
+                        style={{ marginRight: 10 }}
+                    >
+                        Sign In
+                    </Button>
+                    <Button name="signup" color="green" as={Link} to="/signup">
+                        Sign Up
+                    </Button>
                 </Menu.Item>
             </Menu.Menu>
         </Menu>

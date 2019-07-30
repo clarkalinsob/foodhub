@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { GoogleLogin } from "react-google-login";
 import { Button, Divider, Form, Icon, Segment } from "semantic-ui-react";
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
+import { SIGNUP_GOOGLE, SIGNUP_USER } from "../util/graphql";
 const { GOOGLE_CLIENT_ID } = require("../config");
 
 function Signup(props) {
@@ -178,43 +178,5 @@ function Signup(props) {
         </div>
     );
 }
-
-const SIGNUP_USER = gql`
-    mutation signup(
-        $givenName: String!
-        $familyName: String!
-        $email: String!
-        $password: String!
-        $confirmPassword: String!
-    ) {
-        signup(
-            signupInput: {
-                givenName: $givenName
-                familyName: $familyName
-                email: $email
-                password: $password
-                confirmPassword: $confirmPassword
-            }
-        ) {
-            id
-            displayName
-            email
-            createdAt
-            token
-        }
-    }
-`;
-
-const SIGNUP_GOOGLE = gql`
-    mutation signupGoogle($token: String!) {
-        signupGoogle(token: $token) {
-            id
-            displayName
-            email
-            createdAt
-            token
-        }
-    }
-`;
 
 export default Signup;

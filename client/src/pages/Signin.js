@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { GoogleLogin } from "react-google-login";
 import { Button, Divider, Form, Icon, Segment } from "semantic-ui-react";
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
+import { SIGNIN_GOOGLE, SIGNIN_USER } from "../util/graphql";
 const { GOOGLE_CLIENT_ID } = require("../config");
 
 function Signin(props) {
@@ -27,7 +27,7 @@ function Signin(props) {
             }
         ) {
             context.signin(userData);
-            props.history.push("/");
+            props.history.push("/menus");
         },
         onError(err) {
             setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -53,7 +53,7 @@ function Signin(props) {
             }
         ) {
             context.signin(userData);
-            props.history.push("/");
+            props.history.push("/menus");
         },
         onError(err) {
             setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -146,29 +146,5 @@ function Signin(props) {
         </div>
     );
 }
-
-const SIGNIN_USER = gql`
-    mutation signin($email: String!, $password: String!) {
-        signin(email: $email, password: $password) {
-            id
-            displayName
-            email
-            createdAt
-            token
-        }
-    }
-`;
-
-const SIGNIN_GOOGLE = gql`
-    mutation signinGoogle($token: String!) {
-        signinGoogle(token: $token) {
-            id
-            displayName
-            email
-            createdAt
-            token
-        }
-    }
-`;
 
 export default Signin;

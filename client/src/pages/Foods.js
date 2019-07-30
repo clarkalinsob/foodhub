@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { Grid, Transition } from "semantic-ui-react";
+import { Grid, Loader, Transition } from "semantic-ui-react";
 
 import { AuthContext } from "../context/auth";
 import PostCard from "../components/PostCard";
@@ -17,19 +17,15 @@ function Foods() {
     } = useQuery(FETCH_FOODS_QUERY);
 
     return (
-        <Grid columns={3}>
-            <Grid.Row className="page-title">
-                <h1>Foods</h1>
-            </Grid.Row>
+        <Grid columns={2}>
             <Grid.Row>
                 {user && (
                     <Grid.Column>
                         <PostFood />
                     </Grid.Column>
                 )}
-
                 {loading ? (
-                    <h1>Loading foods..</h1>
+                    <Loader active inline />
                 ) : (
                     <Transition.Group>
                         {foods &&

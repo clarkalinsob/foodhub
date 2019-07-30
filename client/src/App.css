@@ -1,3 +1,8 @@
+.menubar {
+    border-radius: 0;
+    margin-bottom: 60rem;
+}
+
 .page-title {
     display: block !important;
     text-align: center;
@@ -10,6 +15,14 @@
     margin: 2rem auto auto auto;
 }
 
+h1,
+h2,
+h3,
+h4 {
+    padding: 0;
+    margin: 0;
+}
+
 .segment {
     padding: 1rem 2rem 1rem 2rem;
 }
@@ -19,10 +32,15 @@ ui.green.buttons .button:focus {
     background-color: #21ba45;
 }
 
-h1,
-h2,
-h3,
-h4 {
+.ui.blue.button:focus,
+ui.blue.buttons .button:focus {
+    background-color: #2185d0;
+}
+
+.ui.grid > .row {
     padding: 0;
-    margin: 0;
+}
+
+.ui.menu .ui.dropdown .menu > .item .icon:not(.dropdown) {
+    color: #b5cc18;
 }

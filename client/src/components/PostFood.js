@@ -1,10 +1,9 @@
 import React from "react";
 import { Button, Form } from "semantic-ui-react";
-import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 
 import { useForm } from "../util/hooks";
-import { FETCH_FOODS_QUERY } from "../util/graphql";
+import { FETCH_FOODS_QUERY, CREATE_FOOD_MUTATION } from "../util/graphql";
 
 function PostFood() {
     const { onChange, onSubmit, values } = useForm(createFoodCallback, {
@@ -30,19 +29,17 @@ function PostFood() {
     return (
         <>
             <Form onSubmit={onSubmit}>
-                <h2>Create a food: </h2>
-                <br />
                 <Form.Field>
                     <Form.Input
-                        placeholder="A food"
+                        placeholder="Create a food..."
                         name="body"
                         onChange={onChange}
                         value={values.body}
                         error={error ? true : false}
                     />
 
-                    <Button type="submit" color="green">
-                        Submit
+                    <Button type="submit" color="blue">
+                        Create
                     </Button>
                 </Form.Field>
             </Form>
@@ -58,30 +55,5 @@ function PostFood() {
         </>
     );
 }
-
-const CREATE_FOOD_MUTATION = gql`
-    mutation createFood($body: String!) {
-        createFood(body: $body) {
-            id
-            body
-            displayName
-            likes {
-                id
-                displayName
-                createdAt
-            }
-            comments {
-                id
-                body
-                displayName
-                createdAt
-            }
-            likeCount
-            commentCount
-            _user
-            createdAt
-        }
-    }
-`;
 
 export default PostFood;

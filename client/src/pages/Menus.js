@@ -1,10 +1,11 @@
 import React from "react";
+import { Grid } from "semantic-ui-react";
 
 function Menus() {
     return (
-        <div>
-            <h1>Menus Page</h1>
-        </div>
+        <Grid columns={1}>
+            <h1>Menus</h1>
+        </Grid>
     );
 }
 

@@ -5,6 +5,7 @@ import moment from "moment";
 
 import { AuthContext } from "../context/auth";
 import LikeButton from "./LikeButton";
+import DeleteButton from "./DeleteButton";
 
 function PostCard({
     food: { body, createdAt, id, displayName, likeCount, commentCount, likes }
@@ -16,9 +17,10 @@ function PostCard({
     }
 
     return (
-        <Card fluid style={{ borderRadius: 0 }}>
+        <Card fluid>
             <Card.Content>
                 <Image
+                    circular
                     floated="right"
                     size="mini"
                     src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
@@ -39,22 +41,15 @@ function PostCard({
             <Card.Content extra>
                 <LikeButton user={user} food={{ id, likes, likeCount }} />
                 <Button labelPosition="right" as={Link} to={`/foods/${id}`}>
-                    <Button color="orange" basic>
+                    <Button basic color="orange">
                         <Icon name="comments" style={{ margin: 0 }} />
                     </Button>
-                    <Label basic color="orange" pointing="left">
+                    <Label color="orange" pointing="left">
                         {commentCount}
                     </Label>
                 </Button>
                 {user && user.displayName === displayName && (
-                    <Button
-                        as="div"
-                        color="red"
-                        floated="right"
-                        onClick={commentOnFood}
-                    >
-                        <Icon name="trash" style={{ margin: 0 }} />
-                    </Button>
+                    <DeleteButton foodId={id} />
                 )}
             </Card.Content>
         </Card>

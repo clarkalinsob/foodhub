@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import { Button, Icon, Label } from "semantic-ui-react";
+import { LIKE_FOOD_MUTATION } from "../util/graphql";
 
 function LikeButton({ user, food: { id, likes, likeCount } }) {
     const [liked, setLiked] = useState(false);
@@ -18,42 +18,35 @@ function LikeButton({ user, food: { id, likes, likeCount } }) {
 
     const likeButton = user ? (
         liked ? (
-            <Button color="green">
-                <Icon name="heart" style={{ margin: 0 }} />
-            </Button>
+            <>
+                <Button color="blue">
+                    <Icon name="thumbs up" style={{ margin: 0 }} />
+                </Button>
+                <Label as="a" basic color="blue" pointing="left">
+                    {likeCount}
+                </Label>
+            </>
         ) : (
-            <Button color="green" basic>
-                <Icon name="heart" style={{ margin: 0 }} />
-            </Button>
+            <>
+                <Button color="blue" basic>
+                    <Icon name="thumbs up" style={{ margin: 0 }} />
+                </Button>
+                <Label as="a" color="blue" pointing="left">
+                    {likeCount}
+                </Label>
+            </>
         )
     ) : (
-        <Button as={Link} to="/signin" color="green" basic>
-            <Icon name="heart" style={{ margin: 0 }} />
+        <Button as={Link} to="/signin" color="blue" basic>
+            <Icon name="thumbs up" style={{ margin: 0 }} />
         </Button>
     );
 
     return (
         <Button as="div" labelPosition="right" onClick={likeFood}>
             {likeButton}
-            <Label as="a" basic color="green" pointing="left">
-                {likeCount}
-            </Label>
         </Button>
     );
 }
-
-const LIKE_FOOD_MUTATION = gql`
-    mutation likeFood($foodId: ID!) {
-        likeFood(foodId: $foodId) {
-            id
-            likes {
-                id
-                displayName
-                createdAt
-            }
-            likeCount
-        }
-    }
-`;
 
 export default LikeButton;

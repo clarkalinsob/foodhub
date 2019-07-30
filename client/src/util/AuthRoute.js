@@ -10,7 +10,7 @@ function AuthRoute({ component: Component, ...rest }) {
         <Route
             {...rest}
             render={props =>
-                user ? <Redirect to="/" /> : <Component {...props} />
+                user ? <Redirect to="/signin" /> : <Component {...props} />
             }
         />
     );
@@ -23,7 +23,7 @@ function ProtectedRoute({ component: Component, ...rest }) {
         <Route
             {...rest}
             render={props =>
-                user ? <Component {...props} /> : <Redirect to="/" />
+                user ? <Component {...props} /> : <Redirect to="/signin" />
             }
         />
     );
