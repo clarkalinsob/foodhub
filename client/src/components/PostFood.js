@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Modal } from "semantic-ui-react";
 import { useMutation } from "@apollo/react-hooks";
 
 import { useForm } from "../util/hooks";
 import { FETCH_FOODS_QUERY, CREATE_FOOD_MUTATION } from "../util/graphql";
 
-function PostFood() {
+function PostFood({ open, close }) {
     const { onChange, onSubmit, values } = useForm(createFoodCallback, {
         body: ""
     });
@@ -23,35 +23,50 @@ function PostFood() {
     });
 
     function createFoodCallback() {
+        close();
         createFood();
     }
 
     return (
         <>
-            <Form onSubmit={onSubmit}>
-                <Form.Field>
-                    <Form.Input
-                        placeholder="Create a food..."
-                        name="body"
-                        onChange={onChange}
-                        value={values.body}
-                        error={error ? true : false}
-                    />
-
-                    <Button type="submit" color="blue">
-                        Create
-                    </Button>
-                </Form.Field>
-            </Form>
-            {error && (
-                <div className="ui error message" style={{ marginBottom: 20 }}>
-                    <div className="content">
-                        <ul className="list">
-                            <li>{error.graphQLErrors[0].message}</li>
-                        </ul>
-                    </div>
-                </div>
-            )}
+            <Modal size="mini" open={open} onClose={close} centered={false}>
+                <Modal.Header>Create Food</Modal.Header>
+                <Modal.Content>
+                    <Form onSubmit={onSubmit}>
+                        <Form.Field>
+                            <Form.Input
+                                placeholder="Create a food..."
+                                name="body"
+                                onChange={onChange}
+                                value={values.body}
+                                error={error ? true : false}
+                            />
+                            <Button
+                                type="submit"
+                                color="orange"
+                                onClick={close}
+                            >
+                                Cancel
+                            </Button>
+                            <Button type="submit" color="olive">
+                                Create
+                            </Button>
+                        </Form.Field>
+                    </Form>
+                    {error && (
+                        <div
+                            className="ui error message"
+                            style={{ marginBottom: 20 }}
+                        >
+                            <div className="content">
+                                <ul className="list">
+                                    <li>{error.graphQLErrors[0].message}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    )}
+                </Modal.Content>
+            </Modal>
         </>
     );
 }

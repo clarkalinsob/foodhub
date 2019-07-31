@@ -1,7 +1,6 @@
 const { AuthenticationError, UserInputError } = require("apollo-server");
 
 const Menu = require("../../models/Menu");
-const Food = require("../../models/Food");
 const checkAuth = require("../../util/check-auth");
 
 module.exports = {
@@ -32,7 +31,7 @@ module.exports = {
 
     Mutation: {
         createMenu: async (_, { body }, context) => {
-            const { id, displayName } = checkAuth(context);
+            const { id, displayName, email } = checkAuth(context);
 
             if (body.trim() === "")
                 throw new Error("Menu body must not be empty");
@@ -41,6 +40,7 @@ module.exports = {
                 createdAt: new Date().toISOString(),
                 body,
                 displayName,
+                email,
                 _user: id
             });
 
@@ -50,12 +50,12 @@ module.exports = {
         },
 
         deleteMenu: async (_, { menuId }, context) => {
-            const { displayName } = checkAuth(context);
+            const { email } = checkAuth(context);
 
             try {
                 const menu = await Menu.findById(menuId);
 
-                if (displayName == menu.displayName) {
+                if (email == menu.email) {
                     await menu.delete();
                     return "Menu deleted successfully";
                 } else throw new AuthenticationError("Action not allowed");
@@ -69,7 +69,7 @@ module.exports = {
             { menuId, meal: { date, foodName, _food } },
             context
         ) => {
-            const { id, displayName } = checkAuth(context);
+            const { id, displayName, email } = checkAuth(context);
 
             if (foodName.trim() === "")
                 throw new Error("Food must be provided");
@@ -82,8 +82,9 @@ module.exports = {
                     createdAt: new Date().toISOString(),
                     date,
                     foodName,
-                    _food,
                     displayName,
+                    email,
+                    _food,
                     _user: id
                 });
 
@@ -93,7 +94,7 @@ module.exports = {
         },
 
         deleteMeal: async (_, { menuId, mealId }, context) => {
-            const { displayName } = checkAuth(context);
+            const { email } = checkAuth(context);
 
             const menu = await Menu.findById(menuId);
 
@@ -102,9 +103,13 @@ module.exports = {
                     meal => meal.id === mealId
                 );
 
-                menu.meals.splice(mealIndex, 1);
-                await menu.save();
-                return menu;
+                if (menu.meals[mealIndex].email === email) {
+                    menu.meals.splice(mealIndex, 1);
+                    await menu.save();
+                    return menu;
+                } else {
+                    throw new AuthenticationError("Action not allowed");
+                }
             } else throw new UserInputError("Menu not found");
         }
     }

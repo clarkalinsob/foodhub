@@ -5,8 +5,12 @@ module.exports = gql`
         id: ID!
         body: String!
         displayName: String!
+        email: String!
         meals: [Meal]!
         likes: [Like]!
+        comments: [Comment]!
+        likeCount: Int!
+        commentCount: Int!
         _user: ID!
         createdAt: String!
     }
@@ -14,6 +18,7 @@ module.exports = gql`
         id: ID!
         body: String!
         displayName: String!
+        email: String!
         likes: [Like]!
         comments: [Comment]!
         likeCount: Int!
@@ -26,6 +31,7 @@ module.exports = gql`
         date: String!
         foodName: String!
         displayName: String!
+        email: String!
         _food: ID!
         _user: ID!
         createdAt: String!
@@ -33,19 +39,21 @@ module.exports = gql`
     type Comment {
         id: ID!
         displayName: String!
+        email: String!
         body: String!
         createdAt: String!
     }
     type Like {
         id: ID!
         displayName: String!
+        email: String!
         createdAt: String
     }
     type User {
         id: ID!
         email: String!
-        token: String!
         displayName: String!
+        token: String!
         createdAt: String!
     }
     input SignupInput {
@@ -59,6 +67,7 @@ module.exports = gql`
         date: String!
         foodName: String!
         displayName: String!
+        email: String!
         _food: ID!
         _user: ID!
         createdAt: String!
@@ -90,5 +99,6 @@ module.exports = gql`
         deleteComment(foodId: ID!, commentId: ID!): Food!
 
         likeFood(foodId: ID!): Food!
+        likeMenu(menuId: ID!): Menu!
     }
 `;

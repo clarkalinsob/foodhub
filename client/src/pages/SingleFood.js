@@ -36,7 +36,8 @@ function SingleFood(props) {
             comments,
             commentCount,
             likes,
-            likeCount
+            likeCount,
+            __typename
         } = getFood;
 
         foodMarkup = (
@@ -75,20 +76,20 @@ function SingleFood(props) {
                             <Card.Content extra>
                                 <LikeButton
                                     user={user}
-                                    food={{ id, likeCount, likes }}
+                                    obj={{ id, likeCount, likes, __typename }}
                                 />
                                 <Button
                                     as="div"
                                     labelPosition="right"
                                     onClick="" // comment on food
                                 >
-                                    <Button color="teal" basic>
+                                    <Button color="orange" basic>
                                         <Icon
                                             name="comments"
                                             style={{ margin: 0 }}
                                         />
                                     </Button>
-                                    <Label basic color="teal" pointing="left">
+                                    <Label basic color="orange" pointing="left">
                                         {commentCount}
                                     </Label>
                                 </Button>

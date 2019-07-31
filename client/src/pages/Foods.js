@@ -3,10 +3,8 @@ import { useQuery } from "@apollo/react-hooks";
 import { Grid, Loader, Transition } from "semantic-ui-react";
 
 import { AuthContext } from "../context/auth";
-import PostCard from "../components/PostCard";
-import PostFood from "../components/PostFood";
-
 import { FETCH_FOODS_QUERY } from "../util/graphql";
+import FoodCard from "../components/FoodCard";
 
 function Foods() {
     const { user } = useContext(AuthContext);
@@ -19,13 +17,8 @@ function Foods() {
     return (
         <Grid columns={2}>
             <Grid.Row>
-                {user && (
-                    <Grid.Column>
-                        <PostFood />
-                    </Grid.Column>
-                )}
                 {loading ? (
-                    <Loader active inline />
+                    <Loader active centered />
                 ) : (
                     <Transition.Group>
                         {foods &&
@@ -34,7 +27,7 @@ function Foods() {
                                     key={food.id}
                                     style={{ marginBottom: 20 }}
                                 >
-                                    <PostCard food={food} />
+                                    <FoodCard food={food} />
                                 </Grid.Column>
                             ))}
                     </Transition.Group>

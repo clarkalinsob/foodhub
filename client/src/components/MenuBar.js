@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Button, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import { AuthContext } from "../context/auth";
 import ProfileDropdown from "./ProfileDropdown";
+import CreateDropdown from "./CreateDropdown";
 
 function MenuBar() {
     const { user, signout } = useContext(AuthContext);
@@ -21,6 +22,7 @@ function MenuBar() {
             </Menu.Item>
             <Menu.Menu position="right">
                 <Menu.Item>
+                    <CreateDropdown />
                     <ProfileDropdown signout={signout} user={user} />
                 </Menu.Item>
             </Menu.Menu>

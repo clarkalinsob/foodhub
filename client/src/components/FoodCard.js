@@ -7,8 +7,17 @@ import { AuthContext } from "../context/auth";
 import LikeButton from "./LikeButton";
 import DeleteButton from "./DeleteButton";
 
-function PostCard({
-    food: { body, createdAt, id, displayName, likeCount, commentCount, likes }
+function FoodCard({
+    food: {
+        body,
+        createdAt,
+        id,
+        displayName,
+        likeCount,
+        commentCount,
+        likes,
+        __typename
+    }
 }) {
     const { user } = useContext(AuthContext);
 
@@ -39,7 +48,10 @@ function PostCard({
                 </Card.Meta>
             </Card.Content>
             <Card.Content extra>
-                <LikeButton user={user} food={{ id, likes, likeCount }} />
+                <LikeButton
+                    user={user}
+                    obj={{ id, likes, likeCount, __typename }}
+                />
                 <Button labelPosition="right" as={Link} to={`/foods/${id}`}>
                     <Button basic color="orange">
                         <Icon name="comments" style={{ margin: 0 }} />
@@ -56,4 +68,4 @@ function PostCard({
     );
 }
 
-export default PostCard;
+export default FoodCard;

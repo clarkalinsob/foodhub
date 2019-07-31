@@ -30,7 +30,7 @@ module.exports = {
     },
     Mutation: {
         async createFood(_, { body }, context) {
-            const user = checkAuth(context);
+            const { id, displayName, email } = checkAuth(context);
 
             if (body.trim() === "") {
                 throw new Error("Food body must not be empty");
@@ -39,8 +39,9 @@ module.exports = {
             const newFood = new Food({
                 createdAt: new Date().toISOString(),
                 body,
-                displayName: user.displayName,
-                _user: user.id
+                displayName,
+                email,
+                _user: id
             });
 
             const food = await newFood.save();
@@ -49,12 +50,12 @@ module.exports = {
         },
 
         async deleteFood(_, { foodId }, context) {
-            const user = checkAuth(context);
+            const { email } = checkAuth(context);
 
             try {
                 const food = await Food.findById(foodId);
 
-                if (user.displayName == food.displayName) {
+                if (email == food.email) {
                     await food.delete();
                     return "Food deleted successfully";
                 } else {

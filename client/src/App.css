@@ -1,3 +1,6 @@
+/* olive #21ba45 */
+/* blue #2185d0 */
+
 .menubar {
     border-radius: 0;
     margin-bottom: 60rem;
@@ -37,8 +40,18 @@ ui.blue.buttons .button:focus {
     background-color: #2185d0;
 }
 
+.ui.orange.button:focus,
+ui.orange.buttons .button:focus {
+    background-color: #f2711c;
+}
+
 .ui.grid > .row {
     padding: 0;
+}
+
+.ui.menu:not(.vertical) .item > .button {
+    font-size: 1.2rem;
+    margin-right: 1rem;
 }
 
 .ui.menu .ui.dropdown .menu > .item .icon:not(.dropdown) {

@@ -49,30 +49,6 @@ module.exports = {
             } else {
                 throw new UserInputError("Food not found");
             }
-        },
-
-        likeFood: async (_, { foodId }, context) => {
-            const { displayName } = checkAuth(context);
-
-            const food = await Food.findById(foodId);
-
-            if (food) {
-                if (food.likes.find(like => like.displayName === displayName)) {
-                    food.likes = food.likes.filter(
-                        like => like.displayName !== displayName
-                    );
-                } else {
-                    food.likes.push({
-                        displayName,
-                        createdAt: new Date().toISOString()
-                    });
-                }
-
-                await food.save();
-                return food;
-            } else {
-                throw new UserInputError("Food not found");
-            }
         }
     }
 };

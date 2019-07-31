@@ -30,7 +30,6 @@ export const FETCH_FOOD_QUERY = gql`
             body
             displayName
             likeCount
-            createdAt
             likes {
                 displayName
             }
@@ -41,6 +40,35 @@ export const FETCH_FOOD_QUERY = gql`
                 body
                 createdAt
             }
+            createdAt
+        }
+    }
+`;
+
+export const FETCH_MENUS_QUERY = gql`
+    {
+        getMenus {
+            id
+            body
+            displayName
+            meals {
+                date
+                foodName
+                displayName
+            }
+            likeCount
+            likes {
+                displayName
+            }
+            commentCount
+            comments {
+                id
+                displayName
+                body
+                createdAt
+            }
+            _user
+            createdAt
         }
     }
 `;
@@ -142,6 +170,20 @@ export const DELETE_FOOD_MUTATION = gql`
 export const LIKE_FOOD_MUTATION = gql`
     mutation likeFood($foodId: ID!) {
         likeFood(foodId: $foodId) {
+            id
+            likes {
+                id
+                displayName
+                createdAt
+            }
+            likeCount
+        }
+    }
+`;
+
+export const LIKE_MENU_MUTATION = gql`
+    mutation likeMenu($menuId: ID!) {
+        likeMenu(menuId: $menuId) {
             id
             likes {
                 id

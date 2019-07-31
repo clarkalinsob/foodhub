@@ -4,6 +4,7 @@ const menuSchema = new Schema({
     createdAt: String,
     body: String,
     displayName: String,
+    email: String,
     meals: [
         {
             createdAt: String,
@@ -14,6 +15,7 @@ const menuSchema = new Schema({
                 ref: "foods"
             },
             displayName: String,
+            email: String,
             _user: {
                 type: Schema.Types.ObjectId,
                 ref: "users"
@@ -22,15 +24,17 @@ const menuSchema = new Schema({
     ],
     likes: [
         {
-            createdAt: String,
-            displayName: String
+            displayName: String,
+            email: String,
+            createdAt: String
         }
     ],
     comments: [
         {
-            createdAt: String,
             body: String,
-            displayName: String
+            displayName: String,
+            email: String,
+            createdAt: String
         }
     ],
     _user: {

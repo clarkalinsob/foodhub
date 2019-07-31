@@ -22,11 +22,6 @@ function ProfileDropdown({ signout, user: { displayName } }) {
             disabled: true
         },
         {
-            key: "account",
-            text: "Account",
-            icon: "user"
-        },
-        {
             key: "sign-out",
             text: "Sign Out",
             icon: "sign out",
@@ -39,6 +34,7 @@ function ProfileDropdown({ signout, user: { displayName } }) {
             trigger={trigger}
             options={options}
             pointing="top right"
+            floating
             icon={null}
         />
     );

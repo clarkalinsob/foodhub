@@ -2,18 +2,35 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import { Button, Icon, Label } from "semantic-ui-react";
-import { LIKE_FOOD_MUTATION } from "../util/graphql";
 
-function LikeButton({ user, food: { id, likes, likeCount } }) {
+import { LIKE_FOOD_MUTATION, LIKE_MENU_MUTATION } from "../util/graphql";
+
+function LikeButton({ user, obj: { id, likes, likeCount, __typename } }) {
     const [liked, setLiked] = useState(false);
+
     useEffect(() => {
         if (user && likes.find(like => like.displayName === user.displayName)) {
             setLiked(true);
         } else setLiked(false);
     }, [user, likes]);
 
-    const [likeFood] = useMutation(LIKE_FOOD_MUTATION, {
-        variables: { foodId: id }
+    let setMutation, variables;
+
+    if (__typename === "Food") {
+        variables = {
+            foodId: id
+        };
+        setMutation = LIKE_FOOD_MUTATION;
+    }
+    if (__typename === "Menu") {
+        variables = {
+            menuId: id
+        };
+        setMutation = LIKE_MENU_MUTATION;
+    }
+
+    const [likeThis] = useMutation(setMutation, {
+        variables
     });
 
     const likeButton = user ? (
@@ -43,7 +60,7 @@ function LikeButton({ user, food: { id, likes, likeCount } }) {
     );
 
     return (
-        <Button as="div" labelPosition="right" onClick={likeFood}>
+        <Button as="div" labelPosition="right" onClick={likeThis}>
             {likeButton}
         </Button>
     );
