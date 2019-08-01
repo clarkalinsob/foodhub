@@ -51,8 +51,8 @@ module.exports = gql`
     }
     type User {
         id: ID!
-        email: String!
         displayName: String!
+        email: String!
         token: String!
         createdAt: String!
     }
@@ -95,10 +95,13 @@ module.exports = gql`
         createFood(body: String!): Food!
         deleteFood(foodId: ID!): String!
 
-        createComment(foodId: ID!, body: String!): Food!
-        deleteComment(foodId: ID!, commentId: ID!): Food!
+        createMenuComment(menuId: ID!, body: String!): Menu!
+        deleteMenuComment(menuId: ID!, commentId: ID!): Menu!
 
-        likeFood(foodId: ID!): Food!
+        createFoodComment(foodId: ID!, body: String!): Food!
+        deleteFoodComment(foodId: ID!, commentId: ID!): Food!
+
         likeMenu(menuId: ID!): Menu!
+        likeFood(foodId: ID!): Food!
     }
 `;

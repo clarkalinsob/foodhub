@@ -13,6 +13,7 @@ function MenuCard({
         createdAt,
         id,
         displayName,
+        email,
         likeCount,
         commentCount,
         likes,
@@ -61,9 +62,7 @@ function MenuCard({
                         {commentCount}
                     </Label>
                 </Button>
-                {user && user.displayName === displayName && (
-                    <DeleteButton menuId={id} />
-                )}
+                {user && user.email === email && <DeleteButton menuId={id} />}
             </Card.Content>
         </Card>
     );

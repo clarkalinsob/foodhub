@@ -9,28 +9,19 @@ function LikeButton({ user, obj: { id, likes, likeCount, __typename } }) {
     const [liked, setLiked] = useState(false);
 
     useEffect(() => {
-        if (user && likes.find(like => like.displayName === user.displayName)) {
+        if (user && likes.find(like => like.email === user.email)) {
             setLiked(true);
         } else setLiked(false);
     }, [user, likes]);
 
-    let setMutation, variables;
+    const mutation =
+        __typename == "Food" ? LIKE_FOOD_MUTATION : LIKE_MENU_MUTATION;
 
-    if (__typename === "Food") {
-        variables = {
-            foodId: id
-        };
-        setMutation = LIKE_FOOD_MUTATION;
-    }
-    if (__typename === "Menu") {
-        variables = {
+    const [likeThis] = useMutation(mutation, {
+        variables: {
+            foodId: id,
             menuId: id
-        };
-        setMutation = LIKE_MENU_MUTATION;
-    }
-
-    const [likeThis] = useMutation(setMutation, {
-        variables
+        }
     });
 
     const likeButton = user ? (
@@ -39,7 +30,7 @@ function LikeButton({ user, obj: { id, likes, likeCount, __typename } }) {
                 <Button color="blue">
                     <Icon name="thumbs up" style={{ margin: 0 }} />
                 </Button>
-                <Label as="a" basic color="blue" pointing="left">
+                <Label basic color="blue" as="a" pointing="left">
                     {likeCount}
                 </Label>
             </>

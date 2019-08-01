@@ -2,22 +2,54 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { Button, Icon, Modal } from "semantic-ui-react";
 
-import { FETCH_FOODS_QUERY, DELETE_FOOD_MUTATION } from "../util/graphql";
+import {
+    FETCH_MENUS_QUERY,
+    FETCH_FOODS_QUERY,
+    DELETE_MENU_MUTATION,
+    DELETE_MENU_COMMENT_MUTATION,
+    DELETE_FOOD_MUTATION,
+    DELETE_FOOD_COMMENT_MUTATION
+} from "../util/graphql";
 
-function DeleteButton({ foodId, callback }) {
+function DeleteButton({ menuId, foodId, commentId, typename, callback }) {
     const [modalOpen, setModalOpen] = useState(false);
-    const [deleteFood] = useMutation(DELETE_FOOD_MUTATION, {
+
+    const mutation =
+        commentId && typename
+            ? typename === "Food"
+                ? DELETE_FOOD_COMMENT_MUTATION
+                : DELETE_MENU_COMMENT_MUTATION
+            : foodId
+            ? DELETE_FOOD_MUTATION
+            : DELETE_MENU_MUTATION;
+
+    const [deleteMutation] = useMutation(mutation, {
         variables: {
-            foodId
+            foodId,
+            menuId,
+            commentId
         },
         update(proxy) {
             setModalOpen(false);
-            const data = proxy.readQuery({
-                query: FETCH_FOODS_QUERY
-            });
-            data.getFoods = data.getFoods.filter(f => f.id !== foodId);
-            proxy.writeQuery({ query: FETCH_FOODS_QUERY, data });
-
+            if (!commentId) {
+                if (foodId) {
+                    const data = proxy.readQuery({
+                        query: FETCH_FOODS_QUERY
+                    });
+                    data.getFoods = data.getFoods.filter(
+                        food => food.id !== foodId
+                    );
+                    proxy.writeQuery({ query: FETCH_FOODS_QUERY, data });
+                } else {
+                    const data = proxy.readQuery({
+                        query: FETCH_MENUS_QUERY
+                    });
+                    data.getMenus = data.getMenus.filter(
+                        menu => menu.id !== menuId
+                    );
+                    proxy.writeQuery({ query: FETCH_MENUS_QUERY, data });
+                }
+            }
             if (callback) callback();
         }
     });
@@ -55,7 +87,7 @@ function DeleteButton({ foodId, callback }) {
                         key: "delete",
                         content: "Delete",
                         color: "olive",
-                        onClick: deleteFood
+                        onClick: deleteMutation
                     }
                 ]}
             />

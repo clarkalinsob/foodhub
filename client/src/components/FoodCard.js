@@ -13,6 +13,7 @@ function FoodCard({
         createdAt,
         id,
         displayName,
+        email,
         likeCount,
         commentCount,
         likes,
@@ -60,9 +61,7 @@ function FoodCard({
                         {commentCount}
                     </Label>
                 </Button>
-                {user && user.displayName === displayName && (
-                    <DeleteButton foodId={id} />
-                )}
+                {user && user.email === email && <DeleteButton foodId={id} />}
             </Card.Content>
         </Card>
     );

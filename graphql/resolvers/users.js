@@ -13,8 +13,8 @@ function generateToken(user) {
     return jwt.sign(
         {
             id: user.id,
-            email: user.email,
-            displayName: user.displayName
+            displayName: user.displayName,
+            email: user.email
         },
         SECRET_KEY,
         {

@@ -12,6 +12,7 @@ import Menus from "./pages/Menus";
 import Foods from "./pages/Foods";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import SingleMenu from "./pages/SingleMenu";
 import SingleFood from "./pages/SingleFood";
 
 import { AuthProvider } from "./context/auth";
@@ -27,9 +28,18 @@ function App() {
                     <Route exact path="/" component={Home} />
                     <ProtectedRoute exact path="/menus" component={Menus} />
                     <ProtectedRoute exact path="/foods" component={Foods} />
+                    <ProtectedRoute
+                        exact
+                        path="/menus/:menuId"
+                        component={SingleMenu}
+                    />
+                    <ProtectedRoute
+                        exact
+                        path="/foods/:foodId"
+                        component={SingleFood}
+                    />
                     <AuthRoute exact path="/signin" component={Signin} />
                     <AuthRoute exact path="/signup" component={Signup} />
-                    <Route exact path="/foods/:foodId" component={SingleFood} />
                 </Container>
             </Router>
         </AuthProvider>

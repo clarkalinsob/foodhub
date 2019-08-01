@@ -12,9 +12,9 @@ module.exports = {
             const food = await Food.findById(foodId);
 
             if (food) {
-                if (food.likes.find(like => like.displayName === displayName)) {
+                if (food.likes.find(like => like.email === email)) {
                     food.likes = food.likes.filter(
-                        like => like.displayName !== displayName
+                        like => like.email !== email
                     );
                 } else {
                     food.likes.push({
@@ -37,9 +37,9 @@ module.exports = {
             const menu = await Menu.findById(menuId);
 
             if (menu) {
-                if (menu.likes.find(like => like.displayName === displayName)) {
+                if (menu.likes.find(like => like.email === email)) {
                     menu.likes = menu.likes.filter(
-                        like => like.displayName !== displayName
+                        like => like.email !== email
                     );
                 } else {
                     menu.likes.push({

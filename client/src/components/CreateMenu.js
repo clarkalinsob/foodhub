@@ -1,41 +1,48 @@
 import React from "react";
 import { Button, Form, Modal } from "semantic-ui-react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import { useForm } from "../util/hooks";
-import { FETCH_FOODS_QUERY, CREATE_FOOD_MUTATION } from "../util/graphql";
+import {
+    FETCH_MENUS_QUERY,
+    FETCH_FOODS_QUERY,
+    CREATE_MENU_MUTATION
+} from "../util/graphql";
 
-function PostFood({ open, close }) {
-    const { onChange, onSubmit, values } = useForm(createFoodCallback, {
+function CreateMenu({ open, close }) {
+    const foods = useQuery(FETCH_FOODS_QUERY);
+
+    const { onChange, onSubmit, values } = useForm(createMenuCallback, {
         body: ""
     });
 
-    const [createFood, { error }] = useMutation(CREATE_FOOD_MUTATION, {
+    const [createMenu, { error }] = useMutation(CREATE_MENU_MUTATION, {
         variables: values,
         update(proxy, result) {
             const data = proxy.readQuery({
-                query: FETCH_FOODS_QUERY
+                query: FETCH_MENUS_QUERY
             });
-            data.getFoods = [result.data.createFood, ...data.getFoods];
-            proxy.writeQuery({ query: FETCH_FOODS_QUERY, data });
+
+            data.getMenus = [result.data.createMenu, ...data.getMenus];
+            proxy.writeQuery({ query: FETCH_MENUS_QUERY, data });
             values.body = "";
+            close();
         }
     });
 
-    function createFoodCallback() {
-        close();
-        createFood();
+    function createMenuCallback() {
+        createMenu();
     }
 
     return (
         <>
             <Modal size="mini" open={open} onClose={close} centered={false}>
-                <Modal.Header>Create Food</Modal.Header>
+                <Modal.Header>Create Menu</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={onSubmit}>
                         <Form.Field>
                             <Form.Input
-                                placeholder="Create a food..."
+                                placeholder="e.g., Menu of the Week"
                                 name="body"
                                 onChange={onChange}
                                 value={values.body}
@@ -71,4 +78,4 @@ function PostFood({ open, close }) {
     );
 }
 
-export default PostFood;
+export default CreateMenu;

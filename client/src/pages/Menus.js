@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { Grid, Loader, Transition } from "semantic-ui-react";
+import { Grid, Loader, Message, Transition } from "semantic-ui-react";
 
 import { AuthContext } from "../context/auth";
 import { FETCH_MENUS_QUERY } from "../util/graphql";
 import MenuCard from "../components/MenuCard";
+import Foods from "./Foods";
 
 function Menus() {
     const { user } = useContext(AuthContext);
@@ -17,10 +18,9 @@ function Menus() {
     return (
         <Grid columns={1}>
             <Grid.Row>
-                {user && <Grid.Column>{/* <Postmenu /> */}</Grid.Column>}
                 {loading ? (
-                    <Loader active centered />
-                ) : (
+                    <Loader active centered="true" />
+                ) : menus.length > 0 ? (
                     <Transition.Group>
                         {menus &&
                             menus.map(menu => (
@@ -32,6 +32,18 @@ function Menus() {
                                 </Grid.Column>
                             ))}
                     </Transition.Group>
+                ) : (
+                    <Grid.Column>
+                        <Message info floating>
+                            <Message.Header>
+                                There are no available menus listed.
+                            </Message.Header>
+                            <p>
+                                Click the + button on the navigation bar to
+                                create a menu.
+                            </p>
+                        </Message>
+                    </Grid.Column>
                 )}
             </Grid.Row>
         </Grid>

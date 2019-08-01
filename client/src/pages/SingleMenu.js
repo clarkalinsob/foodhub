@@ -17,29 +17,29 @@ import {
 } from "semantic-ui-react";
 
 import {
-    FETCH_FOOD_QUERY,
-    CREATE_FOOD_COMMENT_MUTATION
+    FETCH_MENU_QUERY,
+    CREATE_MENU_COMMENT_MUTATION
 } from "../util/graphql";
 import { AuthContext } from "../context/auth";
 import LikeButton from "../components/LikeButton";
 import DeleteButton from "../components/DeleteButton";
 
-function SingleFood(props) {
-    const foodId = props.match.params.foodId;
+function SingleMenu(props) {
+    const menuId = props.match.params.menuId;
     const { user } = useContext(AuthContext);
     const {
-        data: { getFood }
-    } = useQuery(FETCH_FOOD_QUERY, {
+        data: { getMenu }
+    } = useQuery(FETCH_MENU_QUERY, {
         variables: {
-            foodId
+            menuId
         }
     });
 
     const [comment, setComment] = useState("");
 
-    const [createComment] = useMutation(CREATE_FOOD_COMMENT_MUTATION, {
+    const [createComment] = useMutation(CREATE_MENU_COMMENT_MUTATION, {
         variables: {
-            foodId,
+            menuId,
             body: comment
         },
         update() {
@@ -47,13 +47,13 @@ function SingleFood(props) {
         }
     });
 
-    function deleteFoodCallback() {
-        props.history.push("/foods");
+    function deleteMenuCallback() {
+        props.history.push("/menus");
     }
 
-    let foodMarkup;
-    if (!getFood) {
-        foodMarkup = <Loader active centered="true" />;
+    let menuMarkup;
+    if (!getMenu) {
+        menuMarkup = <Loader active centered="true" />;
     } else {
         const {
             id,
@@ -66,9 +66,9 @@ function SingleFood(props) {
             likes,
             likeCount,
             __typename
-        } = getFood;
+        } = getMenu;
 
-        foodMarkup = (
+        menuMarkup = (
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={2}>
@@ -82,7 +82,7 @@ function SingleFood(props) {
                     <Grid.Column width={10}>
                         <Card fluid>
                             <Card.Content>
-                                <Card.Header as={Link} to={`/foods/${id}`}>
+                                <Card.Header as={Link} to={`/menus/${id}`}>
                                     {body}
                                 </Card.Header>
                                 <Card.Meta>
@@ -120,8 +120,8 @@ function SingleFood(props) {
                                 </Button>
                                 {user && user.email === email && (
                                     <DeleteButton
-                                        foodId={id}
-                                        callback={deleteFoodCallback}
+                                        menuId={id}
+                                        callback={deleteMenuCallback}
                                     />
                                 )}
                             </Card.Content>
@@ -166,7 +166,7 @@ function SingleFood(props) {
                                                     user.email ===
                                                         comment.email && (
                                                         <DeleteButton
-                                                            foodId={id}
+                                                            menuId={id}
                                                             commentId={
                                                                 comment.id
                                                             }
@@ -211,7 +211,7 @@ function SingleFood(props) {
         );
     }
 
-    return foodMarkup;
+    return menuMarkup;
 }
 
-export default SingleFood;
+export default SingleMenu;

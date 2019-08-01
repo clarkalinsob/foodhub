@@ -1,17 +1,24 @@
 import React, { useState } from "react";
 import { Dropdown } from "semantic-ui-react";
 
-import PostFood from "./PostFood";
+import CreateMenu from "./CreateMenu";
+import CreateFood from "./CreateFood";
 
 function CreateDropdown() {
-    const [open, setOpen] = useState(false);
+    const [openCreateMenu, setOpenCreateMenu] = useState(false);
+    const [openCreateFood, setOpenCreateFood] = useState(false);
 
-    const openModal = () => {
-        setOpen(true);
+    const openMenuModal = () => {
+        setOpenCreateMenu(true);
+    };
+
+    const openFoodModal = () => {
+        setOpenCreateFood(true);
     };
 
     const close = () => {
-        setOpen(false);
+        setOpenCreateMenu(false);
+        setOpenCreateFood(false);
     };
 
     const tagOptions = [
@@ -19,14 +26,15 @@ function CreateDropdown() {
             key: "createMenu",
             text: "Create menu",
             value: "Create menu",
-            icon: "clipboard list"
+            icon: "clipboard list",
+            onClick: openMenuModal
         },
         {
             key: "createFood",
             text: "Create food",
             value: "Create food",
             icon: "food",
-            onClick: openModal
+            onClick: openFoodModal
         }
     ];
 
@@ -52,7 +60,8 @@ function CreateDropdown() {
                     </Dropdown.Menu>
                 </Dropdown.Menu>
             </Dropdown>
-            <PostFood open={open} close={close} />
+            <CreateMenu open={openCreateMenu} close={close} />
+            <CreateFood open={openCreateFood} close={close} />
         </>
     );
 }
