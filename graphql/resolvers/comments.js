@@ -1,12 +1,12 @@
 const { AuthenticationError, UserInputError } = require("apollo-server");
 
-const Menu = require("../../models/Menu");
+const Meal = require("../../models/Meal");
 const Food = require("../../models/Food");
 const checkAuth = require("../../util/check-auth");
 
 module.exports = {
     Mutation: {
-        createMenuComment: async (_, { menuId, body }, context) => {
+        createMealComment: async (_, { mealId, body }, context) => {
             const { displayName, email } = checkAuth(context);
 
             if (body.trim() === "") {
@@ -17,39 +17,39 @@ module.exports = {
                 });
             }
 
-            const menu = await Menu.findById(menuId);
+            const meal = await Meal.findById(mealId);
 
-            if (menu) {
-                menu.comments.unshift({
+            if (meal) {
+                meal.comments.unshift({
                     body,
                     displayName,
                     email,
                     createdAt: new Date().toISOString()
                 });
-                await menu.save();
-                return menu;
-            } else throw new UserInputError("Menu not found");
+                await meal.save();
+                return meal;
+            } else throw new UserInputError("Meal not found");
         },
 
-        deleteMenuComment: async (_, { menuId, commentId }, context) => {
+        deleteMealComment: async (_, { mealId, commentId }, context) => {
             const { email } = checkAuth(context);
 
-            const menu = await Menu.findById(menuId);
+            const meal = await Meal.findById(mealId);
 
-            if (menu) {
-                const commentIndex = menu.comments.findIndex(
+            if (meal) {
+                const commentIndex = meal.comments.findIndex(
                     comment => comment.id === commentId
                 );
 
-                if (menu.comments[commentIndex].email === email) {
-                    menu.comments.splice(commentIndex, 1);
-                    await menu.save();
-                    return menu;
+                if (meal.comments[commentIndex].email === email) {
+                    meal.comments.splice(commentIndex, 1);
+                    await meal.save();
+                    return meal;
                 } else {
                     throw new AuthenticationError("Action not allowed");
                 }
             } else {
-                throw new UserInputError("Menu not found");
+                throw new UserInputError("Meal not found");
             }
         },
 

@@ -3,30 +3,31 @@ import { useMutation } from "@apollo/react-hooks";
 import { Button, Icon, Modal } from "semantic-ui-react";
 
 import {
-    FETCH_MENUS_QUERY,
+    FETCH_MEALS_QUERY,
     FETCH_FOODS_QUERY,
-    DELETE_MENU_MUTATION,
-    DELETE_MENU_COMMENT_MUTATION,
+    DELETE_MEAL_MUTATION,
+    DELETE_MEAL_COMMENT_MUTATION,
     DELETE_FOOD_MUTATION,
     DELETE_FOOD_COMMENT_MUTATION
 } from "../util/graphql";
+import { type } from "os";
 
-function DeleteButton({ menuId, foodId, commentId, typename, callback }) {
+function DeleteButton({ mealId, foodId, commentId, typename, callback }) {
     const [modalOpen, setModalOpen] = useState(false);
 
     const mutation =
         commentId && typename
             ? typename === "Food"
                 ? DELETE_FOOD_COMMENT_MUTATION
-                : DELETE_MENU_COMMENT_MUTATION
+                : DELETE_MEAL_COMMENT_MUTATION
             : foodId
             ? DELETE_FOOD_MUTATION
-            : DELETE_MENU_MUTATION;
+            : DELETE_MEAL_MUTATION;
 
     const [deleteMutation] = useMutation(mutation, {
         variables: {
             foodId,
-            menuId,
+            mealId,
             commentId
         },
         update(proxy) {
@@ -42,12 +43,12 @@ function DeleteButton({ menuId, foodId, commentId, typename, callback }) {
                     proxy.writeQuery({ query: FETCH_FOODS_QUERY, data });
                 } else {
                     const data = proxy.readQuery({
-                        query: FETCH_MENUS_QUERY
+                        query: FETCH_MEALS_QUERY
                     });
-                    data.getMenus = data.getMenus.filter(
-                        menu => menu.id !== menuId
+                    data.getMeals = data.getMeals.filter(
+                        meal => meal.id !== mealId
                     );
-                    proxy.writeQuery({ query: FETCH_MENUS_QUERY, data });
+                    proxy.writeQuery({ query: FETCH_MEALS_QUERY, data });
                 }
             }
             if (callback) callback();
@@ -74,8 +75,8 @@ function DeleteButton({ menuId, foodId, commentId, typename, callback }) {
                 size="mini"
                 open={modalOpen}
                 onClose={modalClose}
-                header="Delete food"
-                content="Are you sure to delete this food?"
+                header="Delete"
+                content="Are you sure you want to delete this?"
                 actions={[
                     {
                         key: "cancel",

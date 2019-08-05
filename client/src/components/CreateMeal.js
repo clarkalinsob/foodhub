@@ -4,45 +4,45 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import { useForm } from "../util/hooks";
 import {
-    FETCH_MENUS_QUERY,
+    FETCH_MEALS_QUERY,
     FETCH_FOODS_QUERY,
-    CREATE_MENU_MUTATION
+    CREATE_MEAL_MUTATION
 } from "../util/graphql";
 
-function CreateMenu({ open, close }) {
+function CreateMeal({ open, close }) {
     const foods = useQuery(FETCH_FOODS_QUERY);
 
-    const { onChange, onSubmit, values } = useForm(createMenuCallback, {
+    const { onChange, onSubmit, values } = useForm(createMealCallback, {
         body: ""
     });
 
-    const [createMenu, { error }] = useMutation(CREATE_MENU_MUTATION, {
+    const [createMeal, { error }] = useMutation(CREATE_MEAL_MUTATION, {
         variables: values,
         update(proxy, result) {
             const data = proxy.readQuery({
-                query: FETCH_MENUS_QUERY
+                query: FETCH_MEALS_QUERY
             });
 
-            data.getMenus = [result.data.createMenu, ...data.getMenus];
-            proxy.writeQuery({ query: FETCH_MENUS_QUERY, data });
+            data.getMeals = [result.data.createMeal, ...data.getMeals];
+            proxy.writeQuery({ query: FETCH_MEALS_QUERY, data });
             values.body = "";
             close();
         }
     });
 
-    function createMenuCallback() {
-        createMenu();
+    function createMealCallback() {
+        createMeal();
     }
 
     return (
         <>
             <Modal size="mini" open={open} onClose={close} centered={false}>
-                <Modal.Header>Create Menu</Modal.Header>
+                <Modal.Header>Create Meal</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={onSubmit}>
                         <Form.Field>
                             <Form.Input
-                                placeholder="e.g., Menu of the Week"
+                                placeholder="e.g., Meal of the Week"
                                 name="body"
                                 onChange={onChange}
                                 value={values.body}
@@ -78,4 +78,4 @@ function CreateMenu({ open, close }) {
     );
 }
 
-export default CreateMenu;
+export default CreateMeal;

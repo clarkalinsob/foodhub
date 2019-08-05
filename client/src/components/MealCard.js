@@ -7,8 +7,8 @@ import { AuthContext } from "../context/auth";
 import LikeButton from "./LikeButton";
 import DeleteButton from "./DeleteButton";
 
-function MenuCard({
-    menu: {
+function MealCard({
+    meal: {
         body,
         createdAt,
         id,
@@ -23,8 +23,8 @@ function MenuCard({
 }) {
     const { user } = useContext(AuthContext);
 
-    function commentOnMenu() {
-        console.log("comment on menu!");
+    function commentOnMeal() {
+        console.log("comment on meal!");
     }
 
     return (
@@ -36,13 +36,12 @@ function MenuCard({
                     size="mini"
                     src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
                 />
-                <Card.Header as={Link} to={`/menus/${id}`}>
+                <Card.Header as={Link} to={`/meals/${id}`}>
                     {body}
                 </Card.Header>
                 <Card.Meta>
                     <Icon name="user outline" style={{ marginRight: 5 }} />
                     {displayName}
-                    <br />
                 </Card.Meta>
                 <Card.Meta>
                     <Icon name="clock outline" style={{ marginRight: 5 }} />
@@ -54,7 +53,7 @@ function MenuCard({
                     user={user}
                     obj={{ id, likes, likeCount, __typename }}
                 />
-                <Button labelPosition="right" as={Link} to={`/menus/${id}`}>
+                <Button labelPosition="right" as={Link} to={`/meals/${id}`}>
                     <Button basic color="orange">
                         <Icon name="comments" style={{ margin: 0 }} />
                     </Button>
@@ -62,10 +61,10 @@ function MenuCard({
                         {commentCount}
                     </Label>
                 </Button>
-                {user && user.email === email && <DeleteButton menuId={id} />}
+                {user && user.email === email && <DeleteButton mealId={id} />}
             </Card.Content>
         </Card>
     );
 }
 
-export default MenuCard;
+export default MealCard;

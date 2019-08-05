@@ -57,3 +57,11 @@ ui.orange.buttons .button:focus {
 .ui.menu .ui.dropdown .menu > .item .icon:not(.dropdown) {
     color: #b5cc18;
 }
+
+.ui.segment {
+    margin: 0;
+}
+
+.date-picker {
+    margin-bottom: 0.5rem;
+}

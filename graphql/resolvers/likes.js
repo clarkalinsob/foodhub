@@ -1,7 +1,7 @@
 const { AuthenticationError, UserInputError } = require("apollo-server");
 
 const Food = require("../../models/Food");
-const Menu = require("../../models/Menu");
+const Meal = require("../../models/Meal");
 const checkAuth = require("../../util/check-auth");
 
 module.exports = {
@@ -31,28 +31,28 @@ module.exports = {
             }
         },
 
-        likeMenu: async (_, { menuId }, context) => {
+        likeMeal: async (_, { mealId }, context) => {
             const { displayName, email } = checkAuth(context);
 
-            const menu = await Menu.findById(menuId);
+            const meal = await Meal.findById(mealId);
 
-            if (menu) {
-                if (menu.likes.find(like => like.email === email)) {
-                    menu.likes = menu.likes.filter(
+            if (meal) {
+                if (meal.likes.find(like => like.email === email)) {
+                    meal.likes = meal.likes.filter(
                         like => like.email !== email
                     );
                 } else {
-                    menu.likes.push({
+                    meal.likes.push({
                         displayName,
                         email,
                         createdAt: new Date().toISOString()
                     });
                 }
 
-                await menu.save();
-                return menu;
+                await meal.save();
+                return meal;
             } else {
-                throw new UserInputError("Menu not found");
+                throw new UserInputError("Meal not found");
             }
         }
     }

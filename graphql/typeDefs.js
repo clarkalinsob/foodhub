@@ -1,12 +1,12 @@
 const gql = require("graphql-tag");
 
 module.exports = gql`
-    type Menu {
+    type Meal {
         id: ID!
         body: String!
         displayName: String!
         email: String!
-        meals: [Meal]!
+        mealDates: [MealDate]!
         likes: [Like]!
         comments: [Comment]!
         likeCount: Int!
@@ -26,12 +26,25 @@ module.exports = gql`
         _user: ID!
         createdAt: String!
     }
-    type Meal {
+    type MealDate {
         id: ID!
         date: String!
-        foodName: String!
         displayName: String!
         email: String!
+        menu: [Food]
+        orders: [Order]
+        _user: ID!
+        createdAt: String!
+    }
+    type Order {
+        id: ID!
+        date: String!
+        displayName: String!
+        email: String!
+        foodName: String!
+        mealName: String!
+        mealTime: String!
+        _meal: ID!
         _food: ID!
         _user: ID!
         createdAt: String!
@@ -63,18 +76,23 @@ module.exports = gql`
         password: String!
         confirmPassword: String!
     }
-    input MealInput {
+    input FoodInput {
+        body: String!
+    }
+    input MealDateInput {
         date: String!
+        menu: String!
+    }
+    input OrderInput {
+        date: String!
+        mealTime: String!
         foodName: String!
-        displayName: String!
-        email: String!
         _food: ID!
-        _user: ID!
         createdAt: String!
     }
     type Query {
-        getMenus: [Menu]
-        getMenu(menuId: ID!): Menu
+        getMeals: [Meal]
+        getMeal(mealId: ID!): Meal
 
         getFoods: [Food]
         getFood(foodId: ID!): Food
@@ -86,22 +104,22 @@ module.exports = gql`
         signin(email: String!, password: String!): User!
         signinGoogle(token: String!): User!
 
-        createMenu(body: String!): Menu!
-        deleteMenu(menuId: ID!): String!
+        createMeal(body: String!): Meal!
+        deleteMeal(mealId: ID!): String!
 
-        createMeal(menuId: ID!, meal: MealInput): Menu!
-        deleteMeal(menuId: ID!, mealId: ID!): Menu!
+        createMealDate(mealId: ID!, mealDate: MealDateInput): Meal!
+        deleteMealDate(mealId: ID!, mealDateId: ID!): Meal!
 
         createFood(body: String!): Food!
         deleteFood(foodId: ID!): String!
 
-        createMenuComment(menuId: ID!, body: String!): Menu!
-        deleteMenuComment(menuId: ID!, commentId: ID!): Menu!
+        createMealComment(mealId: ID!, body: String!): Meal!
+        deleteMealComment(mealId: ID!, commentId: ID!): Meal!
 
         createFoodComment(foodId: ID!, body: String!): Food!
         deleteFoodComment(foodId: ID!, commentId: ID!): Food!
 
-        likeMenu(menuId: ID!): Menu!
+        likeMeal(mealId: ID!): Meal!
         likeFood(foodId: ID!): Food!
     }
 `;

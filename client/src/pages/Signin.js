@@ -27,7 +27,7 @@ function Signin(props) {
             }
         ) {
             context.signin(userData);
-            props.history.push("/menus");
+            props.history.push("/meals");
         },
         onError(err) {
             setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -53,7 +53,7 @@ function Signin(props) {
             }
         ) {
             context.signin(userData);
-            props.history.push("/menus");
+            props.history.push("/meals");
         },
         onError(err) {
             setErrors(err.graphQLErrors[0].extensions.exception.errors);

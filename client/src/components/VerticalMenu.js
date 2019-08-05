@@ -15,15 +15,15 @@ function VerticalMenu() {
     const verticalMenu = user ? (
         <Menu stackable vertical floated size="large">
             <Menu.Item
-                name="menus"
-                active={activeItem === "menus"}
+                name="meals"
+                active={activeItem === "meals"}
                 onClick={handleItemClick}
                 as={Link}
-                to="/menus"
+                to="/meals"
             >
                 <Label color="orange">1</Label>
                 <Icon color="olive" name="clipboard list" />
-                Menus
+                Meals
             </Menu.Item>
             <Menu.Item
                 name="foods"

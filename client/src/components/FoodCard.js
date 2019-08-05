@@ -41,7 +41,6 @@ function FoodCard({
                 <Card.Meta>
                     <Icon name="user outline" style={{ marginRight: 5 }} />
                     {displayName}
-                    <br />
                 </Card.Meta>
                 <Card.Meta>
                     <Icon name="clock outline" style={{ marginRight: 5 }} />

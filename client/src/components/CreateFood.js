@@ -4,13 +4,13 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import { useForm } from "../util/hooks";
 import {
-    FETCH_MENUS_QUERY,
+    FETCH_MEALS_QUERY,
     FETCH_FOODS_QUERY,
     CREATE_FOOD_MUTATION
 } from "../util/graphql";
 
 function CreateFood({ open, close }) {
-    const menus = useQuery(FETCH_MENUS_QUERY);
+    const meals = useQuery(FETCH_MEALS_QUERY);
 
     const { onChange, onSubmit, values } = useForm(createFoodCallback, {
         body: ""

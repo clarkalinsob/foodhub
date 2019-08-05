@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import { Button, Icon, Label } from "semantic-ui-react";
 
-import { LIKE_FOOD_MUTATION, LIKE_MENU_MUTATION } from "../util/graphql";
+import { LIKE_FOOD_MUTATION, LIKE_MEAL_MUTATION } from "../util/graphql";
 
 function LikeButton({ user, obj: { id, likes, likeCount, __typename } }) {
     const [liked, setLiked] = useState(false);
@@ -15,12 +15,12 @@ function LikeButton({ user, obj: { id, likes, likeCount, __typename } }) {
     }, [user, likes]);
 
     const mutation =
-        __typename == "Food" ? LIKE_FOOD_MUTATION : LIKE_MENU_MUTATION;
+        __typename === "Food" ? LIKE_FOOD_MUTATION : LIKE_MEAL_MUTATION;
 
     const [likeThis] = useMutation(mutation, {
         variables: {
             foodId: id,
-            menuId: id
+            mealId: id
         }
     });
 

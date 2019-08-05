@@ -8,11 +8,11 @@ import "./App.css";
 import MenuBar from "./components/MenuBar";
 import VerticalMenu from "./components/VerticalMenu";
 import Home from "./pages/Home";
-import Menus from "./pages/Menus";
+import Meals from "./pages/Meals";
 import Foods from "./pages/Foods";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
-import SingleMenu from "./pages/SingleMenu";
+import SingleMeal from "./pages/SingleMeal";
 import SingleFood from "./pages/SingleFood";
 
 import { AuthProvider } from "./context/auth";
@@ -26,12 +26,12 @@ function App() {
                 <Container>
                     <VerticalMenu />
                     <Route exact path="/" component={Home} />
-                    <ProtectedRoute exact path="/menus" component={Menus} />
+                    <ProtectedRoute exact path="/meals" component={Meals} />
                     <ProtectedRoute exact path="/foods" component={Foods} />
                     <ProtectedRoute
                         exact
-                        path="/menus/:menuId"
-                        component={SingleMenu}
+                        path="/meals/:mealId/"
+                        component={SingleMeal}
                     />
                     <ProtectedRoute
                         exact

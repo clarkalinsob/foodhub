@@ -1,29 +1,25 @@
 const { model, Schema } = require("mongoose");
 
 const orderSchema = new Schema({
-    createdAt: String,
+    date: String,
     displayName: String,
-    meals: [
-        {
-            createdAt: String,
-            date: String,
-            foodName: String,
-            _food: {
-                type: Schema.Types.ObjectId,
-                ref: "foods"
-            },
-            mealTime: String
-        }
-    ],
-    menuName: String,
-    _menu: {
+    email: String,
+    foodName: String,
+    mealName: String,
+    mealTime: String,
+    _meal: {
         type: Schema.Types.ObjectId,
-        ref: "menus"
+        ref: "meals"
+    },
+    _food: {
+        type: Schema.Types.ObjectId,
+        ref: "foods"
     },
     _user: {
         type: Schema.Types.ObjectId,
         ref: "user"
-    }
+    },
+    createdAt: String
 });
 
-module.exports = model("Menu", orderSchema);
+module.exports = model("Meal", orderSchema);

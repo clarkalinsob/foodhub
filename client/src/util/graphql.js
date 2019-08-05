@@ -1,17 +1,22 @@
 import gql from "graphql-tag";
 
 // QUERY
-export const FETCH_MENUS_QUERY = gql`
+export const FETCH_MEALS_QUERY = gql`
     {
-        getMenus {
+        getMeals {
             id
             body
             displayName
             email
-            meals {
+            mealDates {
+                id
                 date
-                foodName
+                menu {
+                    id
+                    body
+                }
                 displayName
+                email
             }
             likeCount
             likes {
@@ -33,17 +38,22 @@ export const FETCH_MENUS_QUERY = gql`
     }
 `;
 
-export const FETCH_MENU_QUERY = gql`
-    query($menuId: ID!) {
-        getMenu(menuId: $menuId) {
+export const FETCH_MEAL_QUERY = gql`
+    query($mealId: ID!) {
+        getMeal(mealId: $mealId) {
             id
             body
             displayName
             email
-            meals {
+            mealDates {
+                id
                 date
-                foodName
+                menu {
+                    id
+                    body
+                }
                 displayName
+                email
             }
             likeCount
             likes {
@@ -180,16 +190,20 @@ export const SIGNIN_GOOGLE = gql`
     }
 `;
 
-export const CREATE_MENU_MUTATION = gql`
-    mutation createMenu($body: String!) {
-        createMenu(body: $body) {
+export const CREATE_MEAL_MUTATION = gql`
+    mutation createMeal($body: String!) {
+        createMeal(body: $body) {
             id
             body
             displayName
             email
-            meals {
+            mealDates {
+                id
                 date
-                foodName
+                menu {
+                    id
+                    body
+                }
                 displayName
                 email
             }
@@ -213,15 +227,39 @@ export const CREATE_MENU_MUTATION = gql`
     }
 `;
 
-export const DELETE_MENU_MUTATION = gql`
-    mutation deleteMenu($menuId: ID!) {
-        deleteMenu(menuId: $menuId)
+export const DELETE_MEAL_MUTATION = gql`
+    mutation deleteMeal($mealId: ID!) {
+        deleteMeal(mealId: $mealId)
     }
 `;
 
-export const CREATE_MENU_COMMENT_MUTATION = gql`
-    mutation createMenuComment($menuId: ID!, $body: String!) {
-        createMenuComment(menuId: $menuId, body: $body) {
+export const CREATE_MEALDATE_MUTATION = gql`
+    mutation createMealDate($mealId: ID!, $date: String!, $menu: String!) {
+        createMealDate(
+            mealId: $mealId
+            mealDate: { date: $date, menu: $menu }
+        ) {
+            id
+            body
+            displayName
+            email
+            mealDates {
+                id
+                date
+                displayName
+                email
+                menu {
+                    id
+                    body
+                }
+            }
+        }
+    }
+`;
+
+export const CREATE_MEAL_COMMENT_MUTATION = gql`
+    mutation createMealComment($mealId: ID!, $body: String!) {
+        createMealComment(mealId: $mealId, body: $body) {
             id
             comments {
                 id
@@ -235,9 +273,9 @@ export const CREATE_MENU_COMMENT_MUTATION = gql`
     }
 `;
 
-export const DELETE_MENU_COMMENT_MUTATION = gql`
-    mutation deleteMenuComment($menuId: ID!, $commentId: ID!) {
-        deleteMenuComment(menuId: $menuId, commentId: $commentId) {
+export const DELETE_MEAL_COMMENT_MUTATION = gql`
+    mutation deleteMealComment($mealId: ID!, $commentId: ID!) {
+        deleteMealComment(mealId: $mealId, commentId: $commentId) {
             id
             comments {
                 id
@@ -316,9 +354,9 @@ export const DELETE_FOOD_COMMENT_MUTATION = gql`
     }
 `;
 
-export const LIKE_MENU_MUTATION = gql`
-    mutation likeMenu($menuId: ID!) {
-        likeMenu(menuId: $menuId) {
+export const LIKE_MEAL_MUTATION = gql`
+    mutation likeMeal($mealId: ID!) {
+        likeMeal(mealId: $mealId) {
             id
             likes {
                 id

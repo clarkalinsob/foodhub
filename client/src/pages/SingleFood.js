@@ -79,7 +79,7 @@ function SingleFood(props) {
                             src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
                         />
                     </Grid.Column>
-                    <Grid.Column width={10}>
+                    <Grid.Column width={14}>
                         <Card fluid>
                             <Card.Content>
                                 <Card.Header as={Link} to={`/foods/${id}`}>
@@ -91,7 +91,6 @@ function SingleFood(props) {
                                         style={{ marginRight: 5 }}
                                     />
                                     {displayName}
-                                    <br />
                                 </Card.Meta>
                                 <Card.Meta>
                                     <Icon
