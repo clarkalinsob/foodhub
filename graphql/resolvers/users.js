@@ -38,6 +38,17 @@ function generatePassword(length) {
 }
 
 module.exports = {
+    Query: {
+        getUsers: async () => {
+            try {
+                const users = await User.find().sort({ createdAt: -1 });
+                return users;
+            } catch (err) {
+                throw new Error(err);
+            }
+        }
+    },
+
     Mutation: {
         signin: async (_, { email, password }) => {
             const { errors, valid } = validateSigninInput(email, password);

@@ -6,8 +6,9 @@ import "semantic-ui-css/semantic.min.css";
 import "./App.css";
 
 import MenuBar from "./components/MenuBar";
-import VerticalMenu from "./components/VerticalMenu";
+import VerticalMenuBar from "./components/VerticalMenuBar";
 import Home from "./pages/Home";
+import Users from "./pages/Users";
 import Meals from "./pages/Meals";
 import Foods from "./pages/Foods";
 import Signin from "./pages/Signin";
@@ -24,10 +25,11 @@ function App() {
             <Router>
                 <MenuBar />
                 <Container>
-                    <VerticalMenu />
+                    <VerticalMenuBar />
                     <Route exact path="/" component={Home} />
                     <ProtectedRoute exact path="/meals" component={Meals} />
                     <ProtectedRoute exact path="/foods" component={Foods} />
+                    <ProtectedRoute exact path="/users" component={Users} />
                     <ProtectedRoute
                         exact
                         path="/meals/:mealId/"

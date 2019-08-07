@@ -20,7 +20,6 @@ const mealSchema = new Schema({
             ],
             orders: [
                 {
-                    createdAt: String,
                     date: String,
                     displayName: String,
                     email: String,
@@ -30,14 +29,11 @@ const mealSchema = new Schema({
                         type: Schema.Types.ObjectId,
                         ref: "foods"
                     },
-                    _order: {
-                        type: Schema.Types.ObjectId,
-                        ref: "orders"
-                    },
                     _user: {
                         type: Schema.Types.ObjectId,
                         ref: "users"
-                    }
+                    },
+                    createdAt: String
                 }
             ],
             _user: {

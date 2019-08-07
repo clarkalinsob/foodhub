@@ -1,6 +1,19 @@
 import gql from "graphql-tag";
 
 // QUERY
+export const FETCH_USERS_QUERY = gql`
+    {
+        getUsers {
+            id
+            givenName
+            familyName
+            displayName
+            email
+            createdAt
+        }
+    }
+`;
+
 export const FETCH_MEALS_QUERY = gql`
     {
         getMeals {
@@ -273,6 +286,40 @@ export const DELETE_MEALDATE_MUTATION = gql`
                     id
                     body
                 }
+            }
+        }
+    }
+`;
+
+export const CREATE_MEALDATE_ORDER_MUTATION = gql`
+    mutation createMealDateOrder(
+        $mealId: ID!
+        $mealDateId: ID!
+        $date: String!
+        $foodName: String!
+        $mealTime: String!
+    ) {
+        createMealDateOrder(
+            mealId: $mealId
+            mealDateId: $mealDateId
+            mealDateOrder: {
+                date: $date
+                foodName: $foodName
+                mealTime: $mealTime
+            }
+        ) {
+            id
+            body
+            displayName
+            email
+            orders {
+                id
+                date
+                displayName
+                email
+                foodName
+                mealTime
+                createdAt
             }
         }
     }

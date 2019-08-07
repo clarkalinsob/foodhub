@@ -42,9 +42,7 @@ module.exports = gql`
         displayName: String!
         email: String!
         foodName: String!
-        mealName: String!
         mealTime: String!
-        _meal: ID!
         _food: ID!
         _user: ID!
         createdAt: String!
@@ -64,6 +62,8 @@ module.exports = gql`
     }
     type User {
         id: ID!
+        givenName: String!
+        familyName: String!
         displayName: String!
         email: String!
         token: String!
@@ -83,6 +83,11 @@ module.exports = gql`
         date: String!
         menu: String!
     }
+    input MealDateOrderInput {
+        date: String!
+        foodName: String!
+        mealTime: String!
+    }
     input OrderInput {
         date: String!
         mealTime: String!
@@ -91,6 +96,8 @@ module.exports = gql`
         createdAt: String!
     }
     type Query {
+        getUsers: [User]
+
         getMeals: [Meal]
         getMeal(mealId: ID!): Meal
 
@@ -109,6 +116,12 @@ module.exports = gql`
 
         createMealDate(mealId: ID!, mealDate: MealDateInput): Meal!
         deleteMealDate(mealId: ID!, mealDateId: ID!): Meal!
+
+        createMealDateOrder(
+            mealId: ID!
+            mealDateId: ID!
+            mealDateOrder: MealDateOrderInput
+        ): Meal!
 
         createFood(body: String!): Food!
         deleteFood(foodId: ID!): String!

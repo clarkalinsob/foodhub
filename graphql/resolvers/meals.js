@@ -7,9 +7,7 @@ module.exports = {
     Query: {
         getMeals: async () => {
             try {
-                const meals = await Meal.find().sort({
-                    createdAt: -1
-                });
+                const meals = await Meal.find().sort({ createdAt: -1 });
                 return meals;
             } catch (err) {
                 throw new Error(err);
@@ -78,7 +76,7 @@ module.exports = {
                 const meal = await Meal.findById(mealId);
 
                 if (meal) {
-                    meal.mealDates.unshift({
+                    meal.mealDates.push({
                         date,
                         displayName,
                         email,
@@ -109,6 +107,51 @@ module.exports = {
                     return meal;
                 } else throw new AuthenticationError("Action not allowed");
             } else throw new UserInputError("Meal not found");
+        },
+
+        createMealDateOrder: async (
+            _,
+            { mealId, mealDateId, mealDateOrder: { date, foodName, mealTime } },
+            context
+        ) => {
+            console.log("mealID: ", mealId);
+            console.log("mealDateId", mealDateId);
+            console.log("date: ", date);
+            console.log("foodName: ", foodName);
+            console.log("mealTime: ", mealTime);
+
+            const { id, displayName, email } = checkAuth(context);
+
+            if (date.trim() === "") throw new Error("Date must not be empty");
+            if (foodName.trim() === "")
+                throw new Error("Food name must not be empty");
+            if (mealTime.trim() === "")
+                throw new Error("Meal time must not be empty");
+
+            const meal = await Meal.findById(mealId);
+
+            const mDate = meal.mealDates.find(
+                mealDate => mealDate.id === mealDateId
+            );
+
+            const order = mDate.orders.find(order => order.email === email);
+
+            if (order)
+                throw new Error("You already ordered a meal from this date");
+            else {
+                mDate.orders.unshift({
+                    date,
+                    displayName,
+                    email,
+                    foodName,
+                    mealTime,
+                    _user: id,
+                    createdAt: new Date().toISOString()
+                });
+
+                await meal.save();
+                return meal;
+            }
         }
     }
 };

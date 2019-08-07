@@ -17,7 +17,7 @@ function MealCard({
         likeCount,
         commentCount,
         likes,
-        meals,
+        mealDates,
         __typename
     }
 }) {

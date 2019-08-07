@@ -143,11 +143,10 @@ function SingleMeal(props) {
                                                             mealDate.createdAt
                                                         ).fromNow(true)}
                                                     </Card.Meta>
-
                                                     {mealDate.menu.map(m => (
                                                         <List
                                                             bulleted
-                                                            key={m.body}
+                                                            key={m.id}
                                                         >
                                                             <List.Item>
                                                                 {m.body}

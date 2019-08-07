@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { AuthContext } from "../context/auth";
 
-function VerticalMenu() {
+function VerticalMenuBar() {
     const { user } = useContext(AuthContext);
     const pathname = window.location.pathname;
     const path = pathname === "/" ? "home" : pathname.substr(1);
@@ -12,7 +12,7 @@ function VerticalMenu() {
 
     const handleItemClick = (e, { name }) => setActiveItem(name);
 
-    const verticalMenu = user ? (
+    const verticalMenuBar = user ? (
         <Menu stackable vertical floated size="large">
             <Menu.Item
                 name="meals"
@@ -38,20 +38,22 @@ function VerticalMenu() {
             </Menu.Item>
 
             <Menu.Item
-                name="orders"
-                active={activeItem === "orders"}
+                name="users"
+                active={activeItem === "users"}
                 onClick={handleItemClick}
+                as={Link}
+                to="/users"
             >
                 <Label color="orange">1</Label>
                 <Icon color="olive" name="cart" />
-                Orders
+                Users
             </Menu.Item>
         </Menu>
     ) : (
         ""
     );
 
-    return verticalMenu;
+    return verticalMenuBar;
 }
 
-export default VerticalMenu;
+export default VerticalMenuBar;
