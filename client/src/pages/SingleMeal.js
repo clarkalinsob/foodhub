@@ -95,18 +95,29 @@ function SingleMeal(props) {
                                             foodList={foodList}
                                         />
                                     </Grid.Column>
-                                    {mealDates.map(mealDates => (
+                                    {mealDates.map(mealDate => (
                                         <Grid.Column
+                                            key={mealDate.id}
                                             style={{
                                                 marginTop: 20,
                                                 marginBottom: 20
                                             }}
                                         >
-                                            <Card fluid key={mealDates.id}>
+                                            <Card fluid key={mealDate.id}>
                                                 <Card.Content>
+                                                    {user &&
+                                                        user.email ===
+                                                            mealDate.email && (
+                                                            <DeleteButton
+                                                                mealId={id}
+                                                                mealDateId={
+                                                                    mealDate.id
+                                                                }
+                                                            />
+                                                        )}
                                                     <Card.Header>
                                                         {moment(
-                                                            mealDates.date
+                                                            mealDate.date
                                                         ).format(
                                                             "ddd, MMM D, YYYY"
                                                         )}
@@ -119,7 +130,7 @@ function SingleMeal(props) {
                                                                 marginRight: 5
                                                             }}
                                                         />
-                                                        {mealDates.displayName}
+                                                        {mealDate.displayName}
                                                     </Card.Meta>
                                                     <Card.Meta>
                                                         <Icon
@@ -129,10 +140,11 @@ function SingleMeal(props) {
                                                             }}
                                                         />
                                                         {moment(
-                                                            mealDates.createdAt
+                                                            mealDate.createdAt
                                                         ).fromNow(true)}
                                                     </Card.Meta>
-                                                    {mealDates.menu.map(m => (
+
+                                                    {mealDate.menu.map(m => (
                                                         <List
                                                             bulleted
                                                             key={m.body}

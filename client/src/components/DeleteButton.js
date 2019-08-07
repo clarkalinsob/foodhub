@@ -7,12 +7,19 @@ import {
     FETCH_FOODS_QUERY,
     DELETE_MEAL_MUTATION,
     DELETE_MEAL_COMMENT_MUTATION,
+    DELETE_MEALDATE_MUTATION,
     DELETE_FOOD_MUTATION,
     DELETE_FOOD_COMMENT_MUTATION
 } from "../util/graphql";
-import { type } from "os";
 
-function DeleteButton({ mealId, foodId, commentId, typename, callback }) {
+function DeleteButton({
+    mealId,
+    foodId,
+    commentId,
+    mealDateId,
+    typename,
+    callback
+}) {
     const [modalOpen, setModalOpen] = useState(false);
 
     const mutation =
@@ -20,6 +27,8 @@ function DeleteButton({ mealId, foodId, commentId, typename, callback }) {
             ? typename === "Food"
                 ? DELETE_FOOD_COMMENT_MUTATION
                 : DELETE_MEAL_COMMENT_MUTATION
+            : mealDateId
+            ? DELETE_MEALDATE_MUTATION
             : foodId
             ? DELETE_FOOD_MUTATION
             : DELETE_MEAL_MUTATION;
@@ -28,11 +37,12 @@ function DeleteButton({ mealId, foodId, commentId, typename, callback }) {
         variables: {
             foodId,
             mealId,
-            commentId
+            commentId,
+            mealDateId
         },
         update(proxy) {
             setModalOpen(false);
-            if (!commentId) {
+            if (!commentId && !mealDateId) {
                 if (foodId) {
                     const data = proxy.readQuery({
                         query: FETCH_FOODS_QUERY

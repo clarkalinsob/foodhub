@@ -257,6 +257,27 @@ export const CREATE_MEALDATE_MUTATION = gql`
     }
 `;
 
+export const DELETE_MEALDATE_MUTATION = gql`
+    mutation deleteMealDate($mealId: ID!, $mealDateId: ID!) {
+        deleteMealDate(mealId: $mealId, mealDateId: $mealDateId) {
+            id
+            body
+            displayName
+            email
+            mealDates {
+                id
+                date
+                displayName
+                email
+                menu {
+                    id
+                    body
+                }
+            }
+        }
+    }
+`;
+
 export const CREATE_MEAL_COMMENT_MUTATION = gql`
     mutation createMealComment($mealId: ID!, $body: String!) {
         createMealComment(mealId: $mealId, body: $body) {
