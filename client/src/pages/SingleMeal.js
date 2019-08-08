@@ -9,11 +9,11 @@ import {
     Icon,
     Image,
     Label,
-    List,
     Loader,
     Menu,
     Tab,
-    Transition
+    Transition,
+    Divider
 } from "semantic-ui-react";
 
 import { FETCH_MEAL_QUERY, FETCH_FOODS_QUERY } from "../util/graphql";
@@ -22,11 +22,11 @@ import LikeButton from "../components/LikeButton";
 import DeleteButton from "../components/DeleteButton";
 import CommentTab from "../components/CommentTab";
 import CreateMealDate from "../components/CreateMealDate";
+import CreateMealDateOrder from "../components/CreateMealDateOrder";
 
 function SingleMeal(props) {
     const mealId = props.match.params.mealId;
     const { user } = useContext(AuthContext);
-
     const {
         data: { getMeal }
     } = useQuery(FETCH_MEAL_QUERY, {
@@ -34,7 +34,6 @@ function SingleMeal(props) {
             mealId
         }
     });
-
     const {
         data: { getFoods: foods }
     } = useQuery(FETCH_FOODS_QUERY);
@@ -76,7 +75,10 @@ function SingleMeal(props) {
             {
                 menuItem: (
                     <Menu.Item key="menus">
-                        Menus<Label>1</Label>
+                        Menus
+                        {mealDates.length > 0 && (
+                            <Label color="orange">{mealDates.length}</Label>
+                        )}
                     </Menu.Item>
                 ),
                 render: () => (
@@ -122,7 +124,6 @@ function SingleMeal(props) {
                                                             "ddd, MMM D, YYYY"
                                                         )}
                                                     </Card.Header>
-
                                                     <Card.Meta>
                                                         <Icon
                                                             name="user outline"
@@ -143,16 +144,12 @@ function SingleMeal(props) {
                                                             mealDate.createdAt
                                                         ).fromNow(true)}
                                                     </Card.Meta>
-                                                    {mealDate.menu.map(m => (
-                                                        <List
-                                                            bulleted
-                                                            key={m.id}
-                                                        >
-                                                            <List.Item>
-                                                                {m.body}
-                                                            </List.Item>
-                                                        </List>
-                                                    ))}
+                                                    <Divider />
+                                                    <CreateMealDateOrder
+                                                        user={user}
+                                                        mealId={mealId}
+                                                        mealDate={mealDate}
+                                                    />
                                                 </Card.Content>
                                             </Card>
                                         </Grid.Column>
@@ -166,7 +163,10 @@ function SingleMeal(props) {
             {
                 menuItem: (
                     <Menu.Item key="comments">
-                        Comments<Label>{commentCount}</Label>
+                        Comments
+                        {comments.length > 0 && (
+                            <Label color="orange">{commentCount}</Label>
+                        )}
                     </Menu.Item>
                 ),
                 render: () => (

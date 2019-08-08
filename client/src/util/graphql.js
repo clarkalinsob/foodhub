@@ -28,6 +28,14 @@ export const FETCH_MEALS_QUERY = gql`
                     id
                     body
                 }
+                orders {
+                    id
+                    date
+                    foodName
+                    mealTime
+                    displayName
+                    email
+                }
                 displayName
                 email
             }
@@ -64,6 +72,14 @@ export const FETCH_MEAL_QUERY = gql`
                 menu {
                     id
                     body
+                }
+                orders {
+                    id
+                    date
+                    foodName
+                    mealTime
+                    displayName
+                    email
                 }
                 displayName
                 email
@@ -265,6 +281,13 @@ export const CREATE_MEALDATE_MUTATION = gql`
                     id
                     body
                 }
+                orders {
+                    id
+                    date
+                    foodName
+                    mealTime
+                    displayName
+                }
             }
         }
     }
@@ -312,14 +335,19 @@ export const CREATE_MEALDATE_ORDER_MUTATION = gql`
             body
             displayName
             email
-            orders {
+            mealDates {
                 id
                 date
+                orders {
+                    id
+                    date
+                    foodName
+                    mealTime
+                    displayName
+                    email
+                }
                 displayName
                 email
-                foodName
-                mealTime
-                createdAt
             }
         }
     }

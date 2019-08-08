@@ -114,12 +114,6 @@ module.exports = {
             { mealId, mealDateId, mealDateOrder: { date, foodName, mealTime } },
             context
         ) => {
-            console.log("mealID: ", mealId);
-            console.log("mealDateId", mealDateId);
-            console.log("date: ", date);
-            console.log("foodName: ", foodName);
-            console.log("mealTime: ", mealTime);
-
             const { id, displayName, email } = checkAuth(context);
 
             if (date.trim() === "") throw new Error("Date must not be empty");
