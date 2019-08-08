@@ -22,7 +22,7 @@ function MenuBar() {
             </Menu.Item>
             <Menu.Menu position="right">
                 <Menu.Item>
-                    <CreateDropdown />
+                    {user.role === "Admin" && <CreateDropdown />}
                     <ProfileDropdown signout={signout} user={user} />
                 </Menu.Item>
             </Menu.Menu>

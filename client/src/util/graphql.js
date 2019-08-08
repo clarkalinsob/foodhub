@@ -9,6 +9,7 @@ export const FETCH_USERS_QUERY = gql`
             familyName
             displayName
             email
+            role
             createdAt
         }
     }
@@ -177,8 +178,9 @@ export const SIGNUP_USER = gql`
             id
             displayName
             email
-            createdAt
+            role
             token
+            createdAt
         }
     }
 `;
@@ -189,8 +191,9 @@ export const SIGNUP_GOOGLE = gql`
             id
             displayName
             email
-            createdAt
+            role
             token
+            createdAt
         }
     }
 `;
@@ -201,8 +204,9 @@ export const SIGNIN_USER = gql`
             id
             displayName
             email
-            createdAt
+            role
             token
+            createdAt
         }
     }
 `;
@@ -213,8 +217,20 @@ export const SIGNIN_GOOGLE = gql`
             id
             displayName
             email
-            createdAt
+            role
             token
+            createdAt
+        }
+    }
+`;
+
+export const EDIT_USER_MUTATION = gql`
+    mutation editUser($email: String!, $role: String!) {
+        editUser(email: $email, role: $role) {
+            id
+            displayName
+            email
+            role
         }
     }
 `;

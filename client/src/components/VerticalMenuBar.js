@@ -36,18 +36,19 @@ function VerticalMenuBar() {
                 <Icon color="olive" name="food" />
                 Foods
             </Menu.Item>
-
-            <Menu.Item
-                name="users"
-                active={activeItem === "users"}
-                onClick={handleItemClick}
-                as={Link}
-                to="/users"
-            >
-                <Label color="orange">1</Label>
-                <Icon color="olive" name="cart" />
-                Users
-            </Menu.Item>
+            {user.role === "Admin" && (
+                <Menu.Item
+                    name="users"
+                    active={activeItem === "users"}
+                    onClick={handleItemClick}
+                    as={Link}
+                    to="/users"
+                >
+                    <Label color="orange">1</Label>
+                    <Icon color="olive" name="cart" />
+                    Users
+                </Menu.Item>
+            )}
         </Menu>
     ) : (
         ""

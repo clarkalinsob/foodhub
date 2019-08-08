@@ -86,17 +86,19 @@ function SingleMeal(props) {
                         <Grid columns={2}>
                             <Grid.Row>
                                 <Transition.Group>
-                                    <Grid.Column
-                                        style={{
-                                            marginTop: 20,
-                                            marginBottom: 20
-                                        }}
-                                    >
-                                        <CreateMealDate
-                                            mealId={mealId}
-                                            foodList={foodList}
-                                        />
-                                    </Grid.Column>
+                                    {user.role === "Admin" && (
+                                        <Grid.Column
+                                            style={{
+                                                marginTop: 20,
+                                                marginBottom: 20
+                                            }}
+                                        >
+                                            <CreateMealDate
+                                                mealId={mealId}
+                                                foodList={foodList}
+                                            />
+                                        </Grid.Column>
+                                    )}
                                     {mealDates.map(mealDate => (
                                         <Grid.Column
                                             key={mealDate.id}

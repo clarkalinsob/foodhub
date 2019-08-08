@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { UserInputError } = require("apollo-server");
+const checkAuth = require("../../util/check-auth");
 
 const {
     validateSignupInput,
@@ -59,9 +60,7 @@ module.exports = {
                 });
             }
 
-            const user = await User.findOne({
-                email
-            });
+            const user = await User.findOne({ email });
 
             if (!user) {
                 errors.general = "User not found";
@@ -121,9 +120,7 @@ module.exports = {
                 });
             }
 
-            const user = await User.findOne({
-                email
-            });
+            const user = await User.findOne({ email });
 
             if (user) {
                 throw new UserInputError("Email is taken", {
@@ -141,6 +138,7 @@ module.exports = {
                 familyName,
                 email,
                 password,
+                role: "Customer",
                 createdAt: new Date().toISOString()
             });
 
@@ -155,14 +153,7 @@ module.exports = {
         },
 
         signinGoogle: async (_, { token }) => {
-            const {
-                name,
-                given_name,
-                family_name,
-                email,
-                hd,
-                picture
-            } = jwt.decode(token);
+            const { name, given_name, family_name, email } = jwt.decode(token);
 
             const user = await User.findOne({ email });
 
@@ -187,14 +178,7 @@ module.exports = {
         },
 
         signupGoogle: async (_, { token }) => {
-            const {
-                name,
-                given_name,
-                family_name,
-                email,
-                hd,
-                picture
-            } = jwt.decode(token);
+            const { name, given_name, family_name, email } = jwt.decode(token);
 
             const user = await User.findOne({
                 email
@@ -213,6 +197,7 @@ module.exports = {
                 givenName: given_name,
                 family_name: family_name,
                 email,
+                role: "Customer",
                 createdAt: new Date().toISOString()
             });
 
@@ -225,6 +210,20 @@ module.exports = {
                 id: res._id,
                 token: newToken
             };
+        },
+
+        editUser: async (_, { email, role }, context) => {
+            const user = checkAuth(context);
+
+            if (role.trim() === "") throw new Error("Role must not be empty");
+
+            const result = await User.findOne({ email });
+
+            if (result) {
+                result.role = role;
+                await result.save();
+                return result;
+            } else throw new Error("User not found");
         }
     }
 };

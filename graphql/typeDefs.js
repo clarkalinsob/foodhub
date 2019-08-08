@@ -66,6 +66,7 @@ module.exports = gql`
         familyName: String!
         displayName: String!
         email: String!
+        role: String!
         token: String!
         createdAt: String!
     }
@@ -110,6 +111,8 @@ module.exports = gql`
 
         signin(email: String!, password: String!): User!
         signinGoogle(token: String!): User!
+
+        editUser(email: String!, role: String!): User!
 
         createMeal(body: String!): Meal!
         deleteMeal(mealId: ID!): String!
