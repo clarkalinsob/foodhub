@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Icon, Label, Menu } from "semantic-ui-react";
+import { Icon, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import { AuthContext } from "../context/auth";
@@ -21,7 +21,7 @@ function VerticalMenuBar() {
                 as={Link}
                 to="/meals"
             >
-                <Label color="orange">1</Label>
+                {/* <Label color="orange" /> */}
                 <Icon color="olive" name="clipboard list" />
                 Meals
             </Menu.Item>
@@ -32,7 +32,7 @@ function VerticalMenuBar() {
                 as={Link}
                 to="/foods"
             >
-                <Label color="orange">12</Label>
+                {/* <Label color="orange" /> */}
                 <Icon color="olive" name="food" />
                 Foods
             </Menu.Item>
@@ -44,7 +44,7 @@ function VerticalMenuBar() {
                     as={Link}
                     to="/users"
                 >
-                    <Label color="orange">1</Label>
+                    {/* <Label color="orange" /> */}
                     <Icon color="olive" name="cart" />
                     Users
                 </Menu.Item>

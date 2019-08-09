@@ -15,6 +15,7 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import SingleMeal from "./pages/SingleMeal";
 import SingleFood from "./pages/SingleFood";
+import UserProfile from "./pages/UserProfile";
 
 import { AuthProvider } from "./context/auth";
 import { AuthRoute, ProtectedRoute } from "./util/AuthRoute";
@@ -39,6 +40,11 @@ function App() {
                         exact
                         path="/foods/:foodId"
                         component={SingleFood}
+                    />
+                    <ProtectedRoute
+                        exact
+                        path="/users/:email"
+                        component={UserProfile}
                     />
                     <AuthRoute exact path="/signin" component={Signin} />
                     <AuthRoute exact path="/signup" component={Signup} />

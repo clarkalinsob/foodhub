@@ -98,6 +98,7 @@ module.exports = gql`
     }
     type Query {
         getUsers: [User]
+        getUser(email: String!): User
 
         getMeals: [Meal]
         getMeal(mealId: ID!): Meal

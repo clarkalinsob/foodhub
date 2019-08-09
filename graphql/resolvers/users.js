@@ -1,7 +1,8 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { UserInputError } = require("apollo-server");
+const { AuthenticationError, UserInputError } = require("apollo-server");
 const checkAuth = require("../../util/check-auth");
+const { ADMIN } = require("../../util/roles");
 
 const {
     validateSignupInput,
@@ -15,12 +16,11 @@ function generateToken(user) {
         {
             id: user.id,
             displayName: user.displayName,
-            email: user.email
+            email: user.email,
+            role: user.role
         },
         SECRET_KEY,
-        {
-            expiresIn: "1h"
-        }
+        { expiresIn: "1h" }
     );
 }
 
@@ -44,6 +44,15 @@ module.exports = {
             try {
                 const users = await User.find().sort({ createdAt: -1 });
                 return users;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+
+        getUser: async (_, { email }) => {
+            try {
+                const user = await User.findOne({ email });
+                return user;
             } catch (err) {
                 throw new Error(err);
             }

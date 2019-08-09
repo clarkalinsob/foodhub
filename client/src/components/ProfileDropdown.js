@@ -1,7 +1,8 @@
 import React from "react";
 import { Dropdown, Image } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
-function ProfileDropdown({ signout, user: { displayName } }) {
+function ProfileDropdown({ signout, user: { displayName, email } }) {
     const trigger = (
         <span>
             <Image
@@ -11,32 +12,23 @@ function ProfileDropdown({ signout, user: { displayName } }) {
         </span>
     );
 
-    const options = [
-        {
-            key: "user",
-            text: (
-                <span>
-                    <strong>{displayName}</strong>
-                </span>
-            ),
-            disabled: true
-        },
-        {
-            key: "sign-out",
-            text: "Sign Out",
-            icon: "sign out",
-            onClick: signout
-        }
-    ];
-
     return (
-        <Dropdown
-            trigger={trigger}
-            options={options}
-            pointing="top right"
-            floating
-            icon={null}
-        />
+        <Dropdown trigger={trigger} pointing="top right" floating icon={null}>
+            <Dropdown.Menu>
+                <Dropdown.Item text={displayName} disabled />
+                <Dropdown.Item
+                    as={Link}
+                    to={`/users/${email}`}
+                    icon="user"
+                    text="Profile"
+                />
+                <Dropdown.Item
+                    icon="sign out"
+                    text="Sign out"
+                    onClick={signout}
+                />
+            </Dropdown.Menu>
+        </Dropdown>
     );
 }
 

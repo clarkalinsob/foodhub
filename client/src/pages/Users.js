@@ -3,19 +3,22 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import {
     Grid,
-    Icon,
     Image,
     List,
     Loader,
     Message,
+    Popup,
     Transition
 } from "semantic-ui-react";
 
 import { AuthContext } from "../context/auth";
 import { FETCH_USERS_QUERY } from "../util/graphql";
+import DeleteButton from "../components/DeleteButton";
 
 function Users() {
-    const { user } = useContext(AuthContext);
+    const {
+        user: { email, role }
+    } = useContext(AuthContext);
 
     const {
         loading,
@@ -38,25 +41,30 @@ function Users() {
                             >
                                 {users &&
                                     users.map(user => (
-                                        <List.Item
-                                            key={user.id}
-                                            as={Link}
-                                            to={`/users/${user.id}`}
-                                        >
-                                            <Image
-                                                avatar
-                                                src="https://react.semantic-ui.com/images/avatar/small/tom.jpg"
+                                        <List.Item key={user.id}>
+                                            <Popup
+                                                content={user.email}
+                                                trigger={
+                                                    <Image
+                                                        avatar
+                                                        src="https://react.semantic-ui.com/images/avatar/small/tom.jpg"
+                                                    />
+                                                }
                                             />
-                                            <List.Content>
+                                            <List.Content
+                                                as={Link}
+                                                to={`/users/${user.email}`}
+                                            >
                                                 <List.Header>
                                                     {user.displayName}
                                                 </List.Header>
-                                                <Icon
-                                                    name="mail"
-                                                    color="blue"
-                                                />
-                                                {user.email}
+                                                {user.role}
                                             </List.Content>
+                                            {user.email !== email ? (
+                                                <DeleteButton />
+                                            ) : (
+                                                ""
+                                            )}
                                         </List.Item>
                                     ))}
                             </List>

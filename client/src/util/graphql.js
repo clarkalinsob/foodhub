@@ -15,6 +15,17 @@ export const FETCH_USERS_QUERY = gql`
     }
 `;
 
+export const FETCH_USER_QUERY = gql`
+    query($email: String!) {
+        getUser(email: $email) {
+            id
+            displayName
+            email
+            role
+        }
+    }
+`;
+
 export const FETCH_MEALS_QUERY = gql`
     {
         getMeals {
