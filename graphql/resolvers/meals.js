@@ -130,9 +130,13 @@ module.exports = {
 
             const order = mDate.orders.find(order => order.email === email);
 
-            if (order)
-                throw new Error("You already ordered a meal from this date");
-            else {
+            if (order) {
+                order.foodName = foodName;
+                order.mealTime = mealTime;
+
+                await meal.save();
+                return meal;
+            } else {
                 mDate.orders.unshift({
                     date,
                     displayName,

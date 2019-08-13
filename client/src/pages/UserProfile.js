@@ -103,14 +103,14 @@ function UserProfile(props) {
                                             </div>
                                         )}
                                     </Card.Meta>
-                                ) : user.role === "Admin" ? (
+                                ) : user.role === "Admin" &&
+                                  user.email !== email ? (
                                     <Card.Meta>
                                         {role}
                                         {"  "}
                                         <Icon
                                             link
                                             name="edit"
-                                            floated="right"
                                             onClick={() => setEditRole(true)}
                                         />
                                     </Card.Meta>

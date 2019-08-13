@@ -11,6 +11,7 @@ function CreateMealDateOrder({
 }) {
     const [radioFood, setRadioFood] = useState("");
     const [radioMealtime, setRadioMealtime] = useState("");
+    const [edit, setEdit] = useState(false);
 
     const handleChange = (e, { value }) => setRadioFood(value);
     const handleChangeMealtime = (e, { value }) => setRadioMealtime(value);
@@ -29,25 +30,56 @@ function CreateMealDateOrder({
         }
     );
 
+    function createMealDateOrderCallback() {
+        createMealDateOrder();
+        setEdit(false);
+    }
+
     const thisOrder = orders.find(o => o.email === user.email);
 
     return (
         <>
-            {thisOrder ? (
+            {thisOrder && edit === false ? (
                 <Message key={thisOrder.id} positive size="small">
                     <Message.Header>
+                        <div style={{ float: "right" }}>
+                            <Icon
+                                link
+                                name="edit"
+                                onClick={() => setEdit(true)}
+                            />{" "}
+                        </div>
                         <Icon name="food" /> {thisOrder.foodName} <br />{" "}
-                        <Icon name="clock" /> {thisOrder.mealTime}
+                        <Icon name="clock" /> {thisOrder.mealTime} <br />{" "}
                     </Message.Header>
                 </Message>
             ) : (
                 <>
-                    <Message
-                        warning
-                        size="small"
-                        header="You haven't ordered yet."
-                        content="Please select a food and a meal time."
-                    />
+                    {edit ? (
+                        <Message warning size="small">
+                            <Message.Header>
+                                A change of mind?
+                                <span style={{ float: "right" }}>
+                                    <Icon
+                                        link
+                                        name="close"
+                                        onClick={() => setEdit(false)}
+                                    />{" "}
+                                </span>
+                            </Message.Header>
+                            <Message.Content>
+                                Please select a food and a meal time.
+                            </Message.Content>
+                        </Message>
+                    ) : (
+                        <Message
+                            warning
+                            size="small"
+                            header="You haven't ordered yet."
+                            content="Please select a food and a meal time."
+                        />
+                    )}
+
                     <Form>
                         {menu.map(m => (
                             <Form.Field key={m.id}>
@@ -84,7 +116,11 @@ function CreateMealDateOrder({
                             </Form.Field>
                         </Form.Group>
                     </Form>
-                    <Button fluid color="olive" onClick={createMealDateOrder}>
+                    <Button
+                        fluid
+                        color="olive"
+                        onClick={createMealDateOrderCallback}
+                    >
                         Order
                     </Button>
                     {error && (

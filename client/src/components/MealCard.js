@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, Icon, Image, Label } from "semantic-ui-react";
+import { Button, Card, Icon, Image, Label, Rating } from "semantic-ui-react";
 import moment from "moment";
 
 import { AuthContext } from "../context/auth";
 import LikeButton from "./LikeButton";
 import DeleteButton from "./DeleteButton";
+// import RatingComponent from "./RatingComponent";
 
 function MealCard({
     meal: {
@@ -17,7 +18,6 @@ function MealCard({
         likeCount,
         commentCount,
         likes,
-        mealDates,
         __typename
     }
 }) {
@@ -49,6 +49,7 @@ function MealCard({
                 </Card.Meta>
             </Card.Content>
             <Card.Content extra>
+                {/* <RatingComponent /> */}
                 <LikeButton
                     user={user}
                     obj={{ id, likes, likeCount, __typename }}

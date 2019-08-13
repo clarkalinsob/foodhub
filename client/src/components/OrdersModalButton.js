@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import _ from "lodash";
 import moment from "moment";
 import {
     Button,
@@ -48,7 +47,7 @@ function OrdersModalButton({ mealDate: { date, orders } }) {
 
                             <Table.Body>
                                 {orders.map(order => (
-                                    <Table.Row>
+                                    <Table.Row key={order.id}>
                                         <Table.Cell>
                                             <Header as="h4" image>
                                                 <Image
