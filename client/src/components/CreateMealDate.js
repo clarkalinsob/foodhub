@@ -62,12 +62,7 @@ function CreateMealDate({ mealId, foodList }) {
                     style={{ marginBottom: 10 }}
                 />
 
-                <Button
-                    fluid
-                    primary
-                    // disabled={!addButtonActive}
-                    onClick={createMealDate}
-                >
+                <Button fluid color="olive" onClick={createMealDate}>
                     Add
                 </Button>
                 {error && (

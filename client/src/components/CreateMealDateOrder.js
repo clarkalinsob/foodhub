@@ -84,7 +84,7 @@ function CreateMealDateOrder({
                             </Form.Field>
                         </Form.Group>
                     </Form>
-                    <Button fluid color="blue" onClick={createMealDateOrder}>
+                    <Button fluid color="olive" onClick={createMealDateOrder}>
                         Order
                     </Button>
                     {error && (

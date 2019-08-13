@@ -23,6 +23,7 @@ import DeleteButton from "../components/DeleteButton";
 import CommentTab from "../components/CommentTab";
 import CreateMealDate from "../components/CreateMealDate";
 import CreateMealDateOrder from "../components/CreateMealDateOrder";
+import OrdersModalButton from "../components/OrdersModalButton";
 
 function SingleMeal(props) {
     const mealId = props.match.params.mealId;
@@ -112,10 +113,21 @@ function SingleMeal(props) {
                                                     {user &&
                                                         user.email ===
                                                             mealDate.email && (
-                                                            <DeleteButton
-                                                                mealId={id}
-                                                                mealDateId={
-                                                                    mealDate.id
+                                                            <>
+                                                                <DeleteButton
+                                                                    mealId={id}
+                                                                    mealDateId={
+                                                                        mealDate.id
+                                                                    }
+                                                                />
+                                                            </>
+                                                        )}
+                                                    {user &&
+                                                        user.role ===
+                                                            "Admin" && (
+                                                            <OrdersModalButton
+                                                                mealDate={
+                                                                    mealDate
                                                                 }
                                                             />
                                                         )}

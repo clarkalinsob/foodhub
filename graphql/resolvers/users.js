@@ -42,7 +42,7 @@ module.exports = {
     Query: {
         getUsers: async () => {
             try {
-                const users = await User.find().sort({ createdAt: -1 });
+                const users = await User.find().sort({ email: 1 });
                 return users;
             } catch (err) {
                 throw new Error(err);

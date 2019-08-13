@@ -45,7 +45,7 @@ function VerticalMenuBar() {
                     to="/users"
                 >
                     {/* <Label color="orange" /> */}
-                    <Icon color="olive" name="cart" />
+                    <Icon color="olive" name="users" />
                     Users
                 </Menu.Item>
             )}
