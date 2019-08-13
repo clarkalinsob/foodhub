@@ -17,7 +17,7 @@ function MenuBar() {
             borderless
             style={{ borderRadius: 0, marginBottom: "4rem" }}
         >
-            <Menu.Item name="home" as={Link} to="/">
+            <Menu.Item name="meals" as={Link} to="/meals">
                 LOGO
             </Menu.Item>
             <Menu.Menu position="right">
@@ -35,7 +35,7 @@ function MenuBar() {
             borderless
             style={{ borderRadius: 0, marginBottom: "4rem" }}
         >
-            <Menu.Item name="home" as={Link} to="/">
+            <Menu.Item name="meals" as={Link} to="/">
                 LOGO
             </Menu.Item>
 

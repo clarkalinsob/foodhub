@@ -7,7 +7,7 @@ import "./App.css";
 
 import MenuBar from "./components/MenuBar";
 import VerticalMenuBar from "./components/VerticalMenuBar";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import Users from "./pages/Users";
 import Meals from "./pages/Meals";
 import Foods from "./pages/Foods";
@@ -27,7 +27,7 @@ function App() {
                 <MenuBar />
                 <Container>
                     <VerticalMenuBar />
-                    <Route exact path="/" component={Home} />
+                    <Route exact path="/" component={Signin} />
                     <ProtectedRoute exact path="/meals" component={Meals} />
                     <ProtectedRoute exact path="/foods" component={Foods} />
                     <ProtectedRoute exact path="/users" component={Users} />

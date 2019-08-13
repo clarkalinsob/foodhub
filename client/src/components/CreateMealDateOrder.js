@@ -26,14 +26,11 @@ function CreateMealDateOrder({
                 foodName: radioFood,
                 mealTime: radioMealtime
             },
-            update() {}
+            update() {
+                setEdit(false);
+            }
         }
     );
-
-    function createMealDateOrderCallback() {
-        createMealDateOrder();
-        setEdit(false);
-    }
 
     const thisOrder = orders.find(o => o.email === user.email);
 
@@ -116,11 +113,7 @@ function CreateMealDateOrder({
                             </Form.Field>
                         </Form.Group>
                     </Form>
-                    <Button
-                        fluid
-                        color="olive"
-                        onClick={createMealDateOrderCallback}
-                    >
+                    <Button fluid color="olive" onClick={createMealDateOrder}>
                         Order
                     </Button>
                     {error && (
