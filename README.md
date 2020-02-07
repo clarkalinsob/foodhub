@@ -40,7 +40,7 @@ npm start
 npm start
 ```
 
-The app should run now, enjoy!
+The app should be up and running!
 
 ## Author
 **Clark Egbert Alinsob**
