@@ -1,6 +1,6 @@
 # foodhub
 
-MongoDB, ExpressJS, ReactJS, NodeJS, Apollo, GraphQL
+MongoDB, ExpressJS, ReactJS, NodeJS, Apollo, GraphQL, Semantic UI
 
 ## Getting Started
 
