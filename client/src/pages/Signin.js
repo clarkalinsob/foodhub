@@ -25,7 +25,7 @@ function Signin(props) {
       props.history.push('/meals')
     },
     onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.exception.errors)
+      if (err.graphQLErrors.length > 0) setErrors(err.graphQLErrors[0].extensions.exception.errors)
     }
   })
 
@@ -46,7 +46,7 @@ function Signin(props) {
       props.history.push('/meals')
     },
     onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.exception.errors)
+      if (err.graphQLErrors.length > 0) setErrors(err.graphQLErrors[0].extensions.exception.errors)
     }
   })
 
@@ -60,37 +60,37 @@ function Signin(props) {
   // END Sign up with Google
 
   return (
-    <div className='form-container'>
+    <div className="form-container">
       {context && !context.user ? (
         <Segment>
-          <div className='segment'>
+          <div className="segment">
             <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
               <h1>Sign in to Food Hub</h1>
               <h3>
-                <a href='/signup'>
+                <a href="/signup">
                   <u> or create an account</u>
                 </a>
               </h3>
               <br />
               <Form.Input
-                label='Email Address'
-                placeholder='e.g., clark.alinsob@email.com'
-                name='email'
-                type='email'
+                label="Email Address"
+                placeholder="e.g., clark.alinsob@email.com"
+                name="email"
+                type="email"
                 value={values.email}
                 error={errors.email ? true : false}
                 onChange={onChange}
               />
               <Form.Input
-                label='Password'
-                placeholder='e.g., &#183;&#183;&#183;&#183;&#183;&#183;&#183;'
-                name='password'
-                type='password'
+                label="Password"
+                placeholder="e.g., &#183;&#183;&#183;&#183;&#183;&#183;&#183;"
+                name="password"
+                type="password"
                 value={values.password}
                 error={errors.password ? true : false}
                 onChange={onChange}
               />
-              <Button fluid type='submit' positive>
+              <Button fluid type="submit" positive>
                 Sign In
               </Button>
             </Form>
@@ -99,21 +99,21 @@ function Signin(props) {
               clientId={GOOGLE_CLIENT_ID}
               render={renderProps => (
                 <Button fluid primary onClick={renderProps.onClick} disabled={renderProps.disabled}>
-                  <Icon name='google' /> Sign in with Google
+                  <Icon name="google" /> Sign in with Google
                 </Button>
               )}
-              buttonText='Sign in with Google'
+              buttonText="Sign in with Google"
               onSuccess={responseGoogle}
               onFailure={responseGoogle}
               cookiePolicy={'single_host_origin'}
             />
             {Object.keys(errors).length > 0 && (
-              <div className='ui error message'>
-                <div className='content'>
-                  <div className='header'>There was some errors with your submission</div>
-                  <ul className='list'>
+              <div className="ui error message">
+                <div className="content">
+                  <div className="header">There was some errors with your submission</div>
+                  <ul className="list">
                     {Object.values(errors).map(value => (
-                      <li className='content' key={value}>
+                      <li className="content" key={value}>
                         {value}
                       </li>
                     ))}
