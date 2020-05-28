@@ -23,8 +23,7 @@ function generateToken(user) {
 
 function generatePassword(length) {
   let password = ''
-  let charList =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()-=_+[]{};'|,./<>?`~"
+  let charList = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()-=_+[]{};'|,./<>?`~"
 
   for (let i = 0; i < length; i++) {
     password += charList.charAt(Math.floor(Math.random() * charList.length))
@@ -98,17 +97,8 @@ module.exports = {
       }
     },
 
-    signup: async (
-      _,
-      { signupInput: { givenName, familyName, email, password, confirmPassword } }
-    ) => {
-      const { valid, errors } = validateSignupInput(
-        givenName,
-        familyName,
-        email,
-        password,
-        confirmPassword
-      )
+    signup: async (_, { signupInput: { givenName, familyName, email, password, confirmPassword } }) => {
+      const { valid, errors } = validateSignupInput(givenName, familyName, email, password, confirmPassword)
 
       if (!valid) {
         throw new UserInputError('Errors', {
@@ -149,6 +139,7 @@ module.exports = {
     },
 
     signinGoogle: async (_, { token }) => {
+      console.log(token)
       const { name, given_name, family_name, email } = jwt.decode(token)
 
       const user = await User.findOne({ email })
