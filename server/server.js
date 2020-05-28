@@ -21,7 +21,7 @@ mongoose
   .then(() => {
     console.log('MongoDB Connnected')
     return server.listen({
-      port: 5000
+      port: 5001
     })
   })
   .then(res => {
