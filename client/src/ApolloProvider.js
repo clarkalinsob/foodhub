@@ -7,7 +7,7 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import { setContext } from 'apollo-link-context'
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:5001'
+  uri: 'https://foodhub.clarkalinsob.com/server/api'
 })
 
 const setAuthorizationLink = setContext(() => {
