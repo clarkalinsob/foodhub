@@ -20,7 +20,7 @@
     },
     "homepage": "https://github.com/clarkalinsob/foodhub#readme",
     "dependencies": {
-        "apollo-server": "^2.7.0",
+        "apollo-server": "^2.14.2",
         "bcryptjs": "^2.4.3",
         "graphql": "^14.4.2",
         "jsonwebtoken": "^8.5.1",
